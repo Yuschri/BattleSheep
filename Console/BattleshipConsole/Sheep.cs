@@ -87,5 +87,11 @@ namespace BattleSheepConsole
             return lengthAttacked;
         }
 
+        public void resetAttack()
+        {
+            lengthAttacked = 0;
+            destroyed = false;
+        }
+
     }
 }

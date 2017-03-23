@@ -24,6 +24,26 @@ namespace BattleSheepConsole
 
         private static byte RIGHT = 4;
 
+        // Untuk Structured Random Attack
+
+        private static int sRow = 0;
+
+        private static int sCol = 0;
+
+        private static bool backToTop = false;
+
+        // Strategy
+
+        private static int StrategyOne = 1;
+
+        private static int StrategyTwo = 2;
+
+        private static int DefaultStrategy;
+
+        // Strategy Random yang dicatat
+
+        private List<int[,]> RandomHistory = new List<int[,]>();
+
         public AI(GameBoard Board)
         {
             this.Board = Board;
@@ -120,7 +140,7 @@ namespace BattleSheepConsole
         /**
          * Melakukan serangan
          */
-        public void setAttack()
+        private void setAttack(int Strategy)
         {
             // Jika sebelumnya melakukan serangan pada sebuah blok dan
             // blok tersebut adalah kapal, juga bukan bagian terakhir sebuah kapal
@@ -133,8 +153,37 @@ namespace BattleSheepConsole
             // maka melakukan pengacakan untuk menyerang sebuah blok
             else
             {
-                setRandomAttack();
+                if(Strategy == AI.StrategyOne)
+                    setRandomAttack();
+                else
+                    setStructuredAttack();
             }
+        }
+
+        public void setAttack()
+        {
+            if (DefaultStrategy == AI.StrategyOne)
+                setAttack(AI.StrategyOne);
+            else
+                setAttack(AI.StrategyTwo);
+        }
+
+        public void generateStrategy()
+        {
+            int stg1 = getStrategyOneTurn();
+            int stg2 = getStrategyTwoTurn();
+            if(stg1 < stg2)
+            {
+                DefaultStrategy = AI.StrategyOne;
+            }
+            else
+            {
+                DefaultStrategy = AI.StrategyTwo;
+            }
+            Board.resetTurn(GameBoard.Player2);
+            Board.resetAttack(GameBoard.Player2);
+            Board.resetWinner();
+            Console.WriteLine("Strategy 1 : " + stg1 + " Strategy 2 : " + stg2);
         }
 
         public void setOrganizingAttack()
@@ -164,21 +213,20 @@ namespace BattleSheepConsole
             if(Board.isSuccessAttack(lastAttackSuccessRow - 1, lastAttackSuccessCol, this.target) ||
                 Board.isSuccessAttack(lastAttackSuccessRow + 1,lastAttackSuccessCol,this.target))
             {
-                Console.WriteLine("Hanya atas bawah");
+                //Console.WriteLine("Hanya atas bawah");
                 right = false;
                 left = false;
             }
             else if(Board.isSuccessAttack(lastAttackSuccessRow,lastAttackSuccessCol - 1,this.target) ||
                 Board.isSuccessAttack(lastAttackSuccessRow,lastAttackSuccessCol + 1, this.target))
             {
-                Console.WriteLine("Hanya kiri kanan");
+                //Console.WriteLine("Hanya kiri kanan");
                 top = false;
                 bottom = false;
             }
-
             
 
-            if (top)
+                if (top)
             {
                 col = lastAttackSuccessCol;
                 // Jika bagian atas bisa diserang dan merupakan blok yang hancur
@@ -236,8 +284,8 @@ namespace BattleSheepConsole
                     }
                     else
                     {
-                        Console.WriteLine("masuk -1");
-                        Console.WriteLine(row + " " + lastAttackSuccessCol);
+                        //Console.WriteLine("masuk -1");
+                        //Console.WriteLine(row + " " + lastAttackSuccessCol);
                     }
                 }
                 else if (Board.allowAttack(lastAttackSuccessRow, lastAttackSuccessCol + 1, this.target))
@@ -257,13 +305,13 @@ namespace BattleSheepConsole
             {
                 if (Board.getSheep(row, col, this.target).isDestroyed())
                 {
-                    Console.WriteLine("Reset");
+                    //Console.WriteLine("Reset");
                     lastAttackSuccessCol = -1;
                     lastAttackSuccessRow = -1;
                 }
                 else
                 {
-                    Console.WriteLine("Diganti");
+                    //Console.WriteLine("Diganti");
                     lastAttackSuccessCol = col;
                     lastAttackSuccessRow = row;
                 }
@@ -290,7 +338,10 @@ namespace BattleSheepConsole
                 col = rand.Next(0, 10);
                 row = rand.Next(0, 10);
             }
+
+            // Menyerang
             Board.setAttack(row, col, this.target);
+
             if (Board.isSuccessAttack(row, col, this.target))
             {
                 // Jika diserang adalah lokasi sebuah kapal
@@ -301,6 +352,71 @@ namespace BattleSheepConsole
                     {
                         lastAttackSuccessCol = col;
                         lastAttackSuccessRow = row;
+                    }
+                }
+            }
+        }
+
+        private void setStructuredAttack()
+        {
+            int counter = 0,limit = 20;
+            while ((!Board.allowAttack(sRow, sCol, this.target) ||
+                   Board.isSuccessAttack(sRow - 1, sCol, this.target) ||
+                   Board.isSuccessAttack(sRow + 1, sCol, this.target) ||
+                   Board.isSuccessAttack(sRow, sCol - 1, this.target) ||
+                   Board.isSuccessAttack(sRow, sCol + 1, this.target) ||
+                   Board.isSuccessAttack(sRow + 1, sCol + 1, this.target) ||
+                   Board.isSuccessAttack(sRow - 1, sCol - 1, this.target) ||
+                   Board.isSuccessAttack(sRow - 1, sCol + 1, this.target) ||
+                   Board.isSuccessAttack(sRow + 1, sCol - 1, this.target))  &&
+                   counter < limit)
+            {
+                counter++;
+                sCol += 2;
+                if(sCol == 10)
+                {
+                    sRow++;
+                    if (backToTop)
+                        sCol = 0;
+                    else
+                        sCol = 1;
+                }
+                else if(sCol == 11)
+                {
+                    sRow++;
+                    if (backToTop)
+                        sCol = 1;
+                    else
+                        sCol = 0;
+                }
+                if(sRow > 9)
+                {
+                    sRow = 0;
+                    sCol = 1;
+                    backToTop = true;
+                }
+                //Console.WriteLine("Row : " + sRow + " Col : " + sCol);
+            }
+
+            if (counter == 20)
+                setRandomAttack();
+
+            else
+            {
+                Board.setAttack(sRow, sCol, this.target);
+                int row = sRow;
+                int col = sCol;
+                if (Board.isSuccessAttack(row, col, this.target))
+                {
+                    // Jika diserang adalah lokasi sebuah kapal
+                    // Maka tandai lokasi tersebut
+                    if (Board.isShipLocation(row, col, this.target))
+                    {
+                        if (!Board.getSheep(row, col, this.target).isDestroyed())
+                        {
+                            lastAttackSuccessCol = col;
+                            lastAttackSuccessRow = row;
+                        }
                     }
                 }
             }
@@ -338,6 +454,38 @@ namespace BattleSheepConsole
             if (!Board.isDestroyedBlock(row, col, this.target) && Board.allowAttack(row, col, this.target))
                 return col;
             return -1;
+        }
+
+        private int getStrategyOneTurn()
+        {
+            Board.resetTurn(GameBoard.Player2);
+            Board.resetAttack(GameBoard.Player2);
+            Board.resetWinner();
+            while (!Board.hasWinner())
+                setAttack(AI.StrategyOne);
+            lastAttackSuccessCol = -1;
+            lastAttackSuccessRow = -1;
+            return Board.getTurn(GameBoard.Player2);
+        }
+
+        private int getStrategyTwoTurn()
+        {
+            Board.resetTurn(GameBoard.Player2);
+            Board.resetAttack(GameBoard.Player2);
+            Board.resetWinner();
+            while (!Board.hasWinner())
+                setAttack(AI.StrategyTwo);
+            sRow = 0;
+            sCol = 0;
+            backToTop = false;
+            lastAttackSuccessRow = -1;
+            lastAttackSuccessCol = -1;
+            return Board.getTurn(GameBoard.Player2);
+        }
+
+        public int getStrategy()
+        {
+            return DefaultStrategy;
         }
 
     }

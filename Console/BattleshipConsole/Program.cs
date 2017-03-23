@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BattleSheepConsole
 {
@@ -15,16 +11,17 @@ namespace BattleSheepConsole
             AI CPU = new AI(Board);
             CPU.setAISheep();
             Board.RenderBoard();
-            int turn = 0;
+            CPU.generateStrategy();
+            Console.WriteLine(CPU.getStrategy());
+            
             while (!Board.hasWinner())
             {
                 //Console.ReadKey();
                 CPU.setAttack();
                 //Board.RenderBoard();
-                turn++;
             }
             Board.RenderBoard();
-            Console.WriteLine("Selesai dalam turn : " + turn);
+            Console.WriteLine("Selesai dalam turn : " + Board.getTurn(GameBoard.Player2));
             Console.ReadKey();
         }
 
