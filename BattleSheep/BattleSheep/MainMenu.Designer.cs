@@ -42,17 +42,18 @@
             this.play.TabIndex = 0;
             this.play.Text = "Mainkan";
             this.play.UseVisualStyleBackColor = false;
+            this.play.Click += new System.EventHandler(this.play_Click);
             // 
             // MainMenu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            //this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::BattleSheep.Properties.Resources.Menu;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(284, 361);
             this.Controls.Add(this.play);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
+            //this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            //this.MaximizeBox = false;
             this.Name = "MainMenu";
             this.Text = "Main Menu";
             this.ResumeLayout(false);

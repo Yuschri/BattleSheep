@@ -8,16 +8,16 @@ namespace BattleSheepConsole
 
         static void Main(string[] args)
         {
-            GameBoard Board = new GameBoard();
+            GameBoard Board = new GameBoard("Bagas");
             AI CPU = new AI(Board,AI.DIFFICULT.MEDIUM);
             CPU.SetAISheep(new int[] { 2,2,3,3,4,4,5});
             Board.RenderBoard();
             Console.WriteLine("Strategy terpilih : " + CPU.GetStrategy());
             while (!Board.HasWinner())
             {
-                //Console.ReadKey();
+                Console.ReadKey();
                 CPU.SetRealAttack();
-                //Board.RenderBoard();
+                Board.RenderBoard();
             }
             Board.RenderBoard();
             Console.WriteLine("Selesai dalam turn : " + Board.GetTurn(GameBoard.Player2));

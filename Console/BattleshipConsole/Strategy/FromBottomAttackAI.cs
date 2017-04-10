@@ -4,9 +4,9 @@ namespace BattleSheepConsole.Strategy
     class FromBottomAttackAI : AI, AIAttackLogicInterface
     {
 
-        private byte sRow;
+        private byte sRow = 9;
 
-        private byte sCol;
+        private byte sCol = 0;
 
         private bool BackToBottom;
 

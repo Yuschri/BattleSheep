@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Player.cs" />
     <Compile Include="Strategy\AI.cs" />
     <Compile Include="Strategy\AIAttackLogicInterface.cs" />
     <Compile Include="GameBoard.cs" />

@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace BattleSheepConsole
+namespace BattleSheep
 {
     class GameBoard
     {
 
-        public enum PLAYER
-        {
-            PLAYER1, PLAYER2
-        }
-
-        private Player Player1 = new Player("Player 1");
-
-        private Player Player2 = new Player("Player 2");
-
         private int Player1Turn = 0;
 
         private int Player2Turn = 0;
+
+        public static byte Player1 = 1;
+
+        public static byte Player2 = 2;
 
         /**
          * Nilai yang mewakili pemenang dalam permainan
@@ -57,27 +54,6 @@ namespace BattleSheepConsole
         private char[,] Player2Attacked = new char[10, 10];
 
         /**
-         * Melakukan inisialisasi GameBoard dengan syrata memasukkan
-         * nama kedua player
-         */
-        public GameBoard(string Player1Name, string Player2Name)
-        {
-            Player1 = new Player(Player1Name);
-            Player2 = new Player(Player2Name);
-        }
-
-        /**
-         * Jika player 2 adalah CPU, maka cukup menggunakan konstruktor
-         * dengan satu parameter
-         */
-        public GameBoard(string Player1Name)
-        {
-            Player1 = new Player(Player1Name);
-            Player2 = new Player("CPU");
-            Player2.IsCPU(true);
-        }
-
-        /**
          * Rendering board
          */
         public void RenderBoard()
@@ -109,7 +85,7 @@ namespace BattleSheepConsole
                             Console.Write(Player2Attacked[i, j] + " | ");
                     }
                     else
-                        Console.Write(Player2SheepMap[i,j] + " | ");
+                        Console.Write("  | ");
                 }
                 Console.WriteLine();
                 for (int k = 0; k <= 40; k++)
@@ -123,17 +99,17 @@ namespace BattleSheepConsole
         /**
          * Mereset Semua kapal
          */
-        public void ResetSheep(PLAYER Player)
+        public void resetSheep(int Player)
         {
-            if (Player == PLAYER.PLAYER1)
+            if (Player == GameBoard.Player1)
             {
                 this.Player1SheepMap = new char[10, 10];
-                this.Player1.SetSheep(new List<Sheep>());
+                this.Player1Sheep = new List<Sheep>();
             }
             else
             {
                 this.Player2SheepMap = new char[10, 10];
-                this.Player2.SetSheep(new List<Sheep>());
+                this.Player2Sheep = new List<Sheep>();
             }
         }
 
@@ -145,7 +121,7 @@ namespace BattleSheepConsole
             int RowFrom,
             int ColUntil,
             int RowUntil,
-            PLAYER Player)
+            byte Player)
         {
             ColFrom--;
             RowFrom--;
@@ -155,7 +131,7 @@ namespace BattleSheepConsole
             Sheep kapal = new Sheep();
             kapal.setLocation(RowFrom, ColFrom, RowUntil, ColUntil);
 
-            if (Player == PLAYER.PLAYER2)
+            if (Player == GameBoard.Player2)
             {
                 Player2Sheep.Add(kapal);
                 // Jika berotasi
@@ -215,8 +191,8 @@ namespace BattleSheepConsole
                     {
 
                         if (Player2SheepMap[row, ColFrom] == 'X' ||
-                            !CheckDiagonalSheep(row, ColFrom, Player) ||
-                            !CheckHorticalSheep(row, ColFrom, Player))
+                            !checkDiagonalSheep(row, ColFrom, Player) ||
+                            !checkHorticalSheep(row, ColFrom, Player))
                             return false;
                     }
                 }
@@ -226,8 +202,8 @@ namespace BattleSheepConsole
                     for (int col = ColFrom; col < ColUntil; col++)
                     {
                         if (Player2SheepMap[RowFrom, col] == 'X' ||
-                            !CheckDiagonalSheep(RowFrom, col, Player) ||
-                            !CheckHorticalSheep(RowFrom, col, Player))
+                            !checkDiagonalSheep(RowFrom, col, Player) ||
+                            !checkHorticalSheep(RowFrom, col, Player))
                             return false;
                     }
                 }
@@ -239,7 +215,7 @@ namespace BattleSheepConsole
          * Memastikan agar blok yang dpilih memiliki jarak antar kapal lain
          * secara horizontal dan vertical
          */
-        private bool CheckHorticalSheep(int row, int col, int player)
+        private bool checkHorticalSheep(int row, int col, int player)
         {
             bool top = false;
             bool bottom = false;
@@ -266,7 +242,7 @@ namespace BattleSheepConsole
          * Memastikan terdapat kapal yang tidak bersebelahan dengan
          * kapal lain secara diagonal
          */
-        private bool CheckDiagonalSheep(int row, int col, int player)
+        private bool checkDiagonalSheep(int row, int col, int player)
         {
             bool topRight = false;
             bool topLeft = false;
@@ -292,7 +268,7 @@ namespace BattleSheepConsole
         /**
          * Melakukan serangan pada sebuah blok ke pemain lain
          */
-        public void SetAttack(int row, int col, Byte AttackFor)
+        public void setAttack(int row, int col, Byte AttackFor)
         {
             if (AttackFor == GameBoard.Player1)
             {
@@ -301,49 +277,36 @@ namespace BattleSheepConsole
             }
             else
             {
-                //Console.WriteLine(row + " " + col);
+                Console.WriteLine(row + " " + col);
                 Player2Attacked[row, col] = 'O';
                 //Player2Turn++;
                 if (Player2SheepMap[row, col] == 'X')
                 {
-                    Sheep ship = this.GetSheep(row, col, GameBoard.Player2);
+                    Sheep ship = this.getSheep(row, col, GameBoard.Player2);
                     ship.setAttack();
-                    //Console.WriteLine("Panjang kapal : " + ship.getLength());
-                    //Console.WriteLine("Telah terserang : " + ship.getAttackedLength());
-                    //Console.WriteLine(ship.getPosition());
+                    Console.WriteLine("Panjang kapal : " + ship.getLength());
+                    Console.WriteLine("Telah terserang : " + ship.getAttackedLength());
+                    Console.WriteLine(ship.getPosition());
                 }
-                if (!IsSuccessAttack(row, col, GameBoard.Player2))
+                if (!isSuccessAttack(row, col, GameBoard.Player2))
                     Player2Turn++;
-                //Console.WriteLine("Turn : " + Player2Turn);
-            }
-        }
-
-        public void ResetAttack(byte PlayerBoard)
-        {
-            if(PlayerBoard == GameBoard.Player2)
-            {
-                Player2Attacked = new char[10, 10];
-                for(int i = 0; i < Player2Sheep.Count; i++)
-                {
-                    Player2Sheep[i].resetAttack();
-                }
             }
         }
 
         /**
          * Memastikan sebuah blok dapat diserang atau tidak
          */
-        public bool AllowAttack(int row, int col, byte AttackFor)
+        public bool allowAttack(int row, int col, byte AttackFor)
         {
             if (row > 9 || row < 0 || col > 9 || col < 0)
                 return false;
-            return !HasAttacked(row, col, AttackFor);
+            return !hasAttacked(row, col, AttackFor);
         }
 
         /**
          * Memastikan sebuah blok pernah diserang sebelumnya atau tidak
          */
-        private bool HasAttacked(int row, int col, byte AttackFor)
+        private bool hasAttacked(int row, int col, byte AttackFor)
         {
             if (AttackFor == GameBoard.Player2)
             {
@@ -356,7 +319,7 @@ namespace BattleSheepConsole
         /**
          * Mengecek apakah sudah ada pemenang
          */
-        public bool HasWinner()
+        public bool hasWinner()
         {
             // Jika jumlah putaran player kurang dari 12 putaran
             // artinya, tidak mungkin dalam jumlah putaran tersebut
@@ -395,7 +358,7 @@ namespace BattleSheepConsole
             return false;
         }
 
-        public bool IsSuccessAttack(int row, int col, byte Player)
+        public bool isSuccessAttack(int row, int col, byte Player)
         {
             if (row > 9 || row < 0 || col > 9 || col < 0)
                 return false;
@@ -413,7 +376,7 @@ namespace BattleSheepConsole
         /**
          * Memastikan apakah sebuah blok merupakan sebuah kapal
          */
-        public bool IsShipLocation(int row, int col, int Player)
+        public bool isShipLocation(int row, int col, int Player)
         {
             if (Player == GameBoard.Player1)
             {
@@ -428,7 +391,7 @@ namespace BattleSheepConsole
             return false;
         }
 
-        public bool IsDestroyedBlock(int row, int col, byte Player)
+        public bool isDestroyedBlock(int row, int col, byte Player)
         {
             if (Player == GameBoard.Player1)
             {
@@ -446,12 +409,12 @@ namespace BattleSheepConsole
         /**
          * Memastikan siapa pememang permainan
          */
-        public int GetWinner()
+        public int getWinner()
         {
             return Winner;
         }
 
-        public Sheep GetSheep(int row, int col, byte Player)
+        public Sheep getSheep(int row, int col, byte Player)
         {
             Sheep sheep = new Sheep();
             if (Player == GameBoard.Player1)
@@ -471,24 +434,6 @@ namespace BattleSheepConsole
                 }
             }
             return sheep;
-        }
-
-        public int GetTurn(byte Player)
-        {
-            return (Player == GameBoard.Player1) ? Player1Turn : Player2Turn;
-        }
-
-        public void ResetWinner()
-        {
-            Winner = -1;
-        }
-
-        public void ResetTurn(byte Player)
-        {
-            if (Player == GameBoard.Player1)
-                Player1Turn = 0;
-            else
-                Player2Turn = 0;
         }
 
     }

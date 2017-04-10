@@ -10,11 +10,22 @@ using System.Windows.Forms;
 
 namespace BattleSheep
 {
-    public partial class MainMenu : Form
+    public partial class MainMenu : Panel
     {
-        public MainMenu()
+        public GameBoardGUI papan;
+        Control FControl;
+        public MainMenu(Control Parent)
         {
+            FControl = Parent;
+            papan = new GameBoardGUI(FControl);
             InitializeComponent();
+        }
+
+        private void play_Click(object sender, EventArgs e)
+        {
+            FControl.Controls.RemoveAt(0);
+            FControl.Size = new Size(800, 600);
+            FControl.Controls.Add(papan);
         }
     }
 }
