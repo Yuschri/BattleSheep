@@ -4,7 +4,7 @@ namespace BattleSheepConsole.Strategy
     class RandomAttackAI : AI, AIAttackLogicInterface
     {
 
-        public RandomAttackAI(GameBoard Board) : base(Board)
+        public RandomAttackAI(GameBoardController Board) : base(Board)
         {
             base.Board = Board;
         }

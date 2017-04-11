@@ -10,7 +10,7 @@ namespace BattleSheepConsole.Strategy
 
         private bool BackToBottom;
 
-        public FromBottomAttackAI(GameBoard Board) : base(Board)
+        public FromBottomAttackAI(GameBoardController Board) : base(Board)
         {
             base.Board = Board;
         }
@@ -34,18 +34,7 @@ namespace BattleSheepConsole.Strategy
                 if (sCol == 10)
                 {
                     sRow--;
-                    if (BackToBottom)
-                        sCol = 0;
-                    else
-                        sCol = 1;
-                }
-                else if (sCol == 11)
-                {
-                    sRow--;
-                    if (BackToBottom)
-                        sCol = 1;
-                    else
-                        sCol = 0;
+                    sCol = (byte)((BackToBottom) ? (sCol == 10) ? 0 : 1 : (sCol == 11) ? 1 : 0 );
                 }
                 if (sRow < 0)
                 {
@@ -61,7 +50,6 @@ namespace BattleSheepConsole.Strategy
             {
                 base.SetRandomAttack();
             }
-
             else
             {
                 Board.SetAttack(sRow, sCol, this.target);
@@ -71,7 +59,7 @@ namespace BattleSheepConsole.Strategy
                 {
                     // Jika diserang adalah lokasi sebuah kapal
                     // Maka tandai lokasi tersebut
-                    if (Board.IsShipLocation(row, col, this.target))
+                    if (Board.IsSheepLocation(row, col, this.target))
                     {
                         if (!Board.GetSheep(row, col, this.target).isDestroyed())
                         {
@@ -83,7 +71,7 @@ namespace BattleSheepConsole.Strategy
             }
         }
 
-        public void SetAttack()
+        public new void SetAttack()
         {
             // Jika sebelumnya melakukan serangan pada sebuah blok dan
             // blok tersebut adalah domba, juga bukan bagian terakhir sebuah domba

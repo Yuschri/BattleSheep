@@ -23,16 +23,13 @@ namespace BattleSheepConsole.Strategy
 
         protected Random Rand = new Random();
 
-        protected GameBoard Board;
+        protected GameBoardController Board;
 
         protected int lastAttackSuccessRow = -1;
 
         protected int lastAttackSuccessCol = -1;
 
-        /**
-         * Target Player yang akan diserang
-         */
-        protected byte target = GameBoard.Player2;
+        protected GameBoardController.PLAYER target = GameBoardController.PLAYER.PLAYER2;
 
         /**
          * Jenis difficult
@@ -56,12 +53,12 @@ namespace BattleSheepConsole.Strategy
          */
         private int[] SheepPlan;
 
-        public AI(GameBoard Board)
+        public AI(GameBoardController Board)
         {
             this.Board = Board;
         }
 
-        public AI(GameBoard Board, DIFFICULT Difficult)
+        public AI(GameBoardController Board, DIFFICULT Difficult)
         {
             this.Board = Board;
             this.Difficult = Difficult;
@@ -80,6 +77,40 @@ namespace BattleSheepConsole.Strategy
             else
             {
                 this.GenerateStrategy();
+            }
+        }
+
+        public void UseInsteadAI(AI AI)
+        {
+            if(AI is FromTopAttackAI)
+            {
+                FromTopAttackAI Strategy = (FromTopAttackAI) AI;
+                this.Strategy = Strategy;
+                this.Name = Strategy.GetName();
+            }
+            else if (AI is FromBottomAttackAI)
+            {
+                FromBottomAttackAI Strategy = (FromBottomAttackAI) AI;
+                this.Strategy = Strategy;
+                this.Name = Strategy.GetName();
+            }
+            else if (AI is FromLeftAttackAI)
+            {
+                FromLeftAttackAI Strategy = (FromLeftAttackAI) AI;
+                this.Strategy = Strategy;
+                this.Name = Strategy.GetName();
+            }
+            else if (AI is FromRightAttackAI)
+            {
+                FromRightAttackAI Strategy = (FromRightAttackAI) AI;
+                this.Strategy = Strategy;
+                this.Name = Strategy.GetName();
+            }
+            else
+            {
+                RandomAttackAI Strategy = (RandomAttackAI) AI;
+                this.Strategy = Strategy;
+                this.Name = Strategy.GetName();
             }
         }
 
@@ -129,7 +160,7 @@ namespace BattleSheepConsole.Strategy
                 RowFrom,
                 ColUntil,
                 RowUntil,
-                GameBoard.Player2
+                GameBoardController.PLAYER.PLAYER2
                 ) && counter <= limitLoop)
             {
                 unrotate = (Rand.Next(1, 3) == 1) ? false : true;
@@ -208,7 +239,7 @@ namespace BattleSheepConsole.Strategy
             {
                 // Jika diserang adalah lokasi sebuah kapal
                 // Maka tandai lokasi tersebut
-                if (Board.IsShipLocation(row, col, this.target))
+                if (Board.IsSheepLocation(row, col, this.target))
                 {
                     if (!Board.GetSheep(row, col, this.target).isDestroyed())
                     {
@@ -233,7 +264,6 @@ namespace BattleSheepConsole.Strategy
             bool right = true;
 
             bool hasAttacked = false;
-            byte priority = 0;
 
             // Menentukan arah yang bisa diserang
             if (lastAttackSuccessRow == 0)
@@ -260,7 +290,6 @@ namespace BattleSheepConsole.Strategy
                 top = false;
                 bottom = false;
             }
-
 
             if (top)
             {
@@ -320,8 +349,8 @@ namespace BattleSheepConsole.Strategy
                     }
                     else
                     {
-                        //Console.WriteLine("masuk -1");
-                        //Console.WriteLine(row + " " + lastAttackSuccessCol);
+                        Console.WriteLine("masuk -1");
+                        Console.WriteLine(row + " " + lastAttackSuccessCol);
                     }
                 }
                 else if (Board.AllowAttack(lastAttackSuccessRow, lastAttackSuccessCol + 1, this.target))
@@ -337,7 +366,7 @@ namespace BattleSheepConsole.Strategy
             // Jika blok yang diserang merupakan sebuah kapal dan
             // kapal tersebut sudah hancur, maka tandai blok serangan
             // terakhir sebagai kosong
-            if (Board.IsShipLocation(row, col, this.target))
+            if (Board.IsSheepLocation(row, col, this.target))
             {
                 if (Board.GetSheep(row, col, this.target).isDestroyed())
                 {
@@ -373,6 +402,7 @@ namespace BattleSheepConsole.Strategy
 
         protected int GetLastCol(int row,int col, WAY way)
         {
+            Console.WriteLine("Last col : " + row + " " + col);
             if(way == WAY.LEFT)
             {
                 while (Board.IsDestroyedBlock(row, col, this.target) && col > 0)
@@ -383,6 +413,7 @@ namespace BattleSheepConsole.Strategy
                 while (Board.IsDestroyedBlock(row, col, this.target) && col < 9)
                     col++;
             }
+            Console.WriteLine("Last col after : " + row + " " + col);
             if (!Board.IsDestroyedBlock(row, col, this.target) && Board.AllowAttack(row, col, this.target))
                 return col;
             return -1;
@@ -406,7 +437,7 @@ namespace BattleSheepConsole.Strategy
 
         }
 
-        public void SetRealAttack()
+        public void SetAttack()
         {
             if(this.Strategy is RandomAttackAI)
             {

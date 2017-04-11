@@ -1,6 +1,7 @@
 ﻿
 namespace BattleSheepConsole.Strategy
 {
+
     class FromTopAttackAI : AI, AIAttackLogicInterface
     {
 
@@ -10,7 +11,7 @@ namespace BattleSheepConsole.Strategy
 
         private bool BackToTop = false;
 
-        public FromTopAttackAI(GameBoard Board) : base(Board)
+        public FromTopAttackAI(GameBoardController Board) : base(Board)
         {
             base.Board = Board;
         }
@@ -34,18 +35,7 @@ namespace BattleSheepConsole.Strategy
                 if (sCol == 10)
                 {
                     sRow++;
-                    if (BackToTop)
-                        sCol = 0;
-                    else
-                        sCol = 1;
-                }
-                else if (sCol == 11)
-                {
-                    sRow++;
-                    if (BackToTop)
-                        sCol = 1;
-                    else
-                        sCol = 0;
+                    sCol = (byte)((sCol == 10) ? (BackToTop) ? 0 : 1 : (BackToTop) ? 1 : 0);
                 }
                 if (sRow > 9)
                 {
@@ -68,7 +58,7 @@ namespace BattleSheepConsole.Strategy
                 {
                     // Jika diserang adalah lokasi sebuah kapal
                     // Maka tandai lokasi tersebut
-                    if (Board.IsShipLocation(row, col, this.target))
+                    if (Board.IsSheepLocation(row, col, this.target))
                     {
                         if (!Board.GetSheep(row, col, this.target).isDestroyed())
                         {
@@ -80,7 +70,7 @@ namespace BattleSheepConsole.Strategy
             }
         }
 
-        public void SetAttack()
+        public new void SetAttack()
         {
             //System.Console.WriteLine(sRow + " " + sCol);
             // Jika sebelumnya melakukan serangan pada sebuah blok dan
