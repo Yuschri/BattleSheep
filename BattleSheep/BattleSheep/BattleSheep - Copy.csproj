@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BattleSheepSys.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Sheep.cs" />
     <Compile Include="GUI\GameBoardGUI.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -96,18 +98,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Player.cs" />
-    <Compile Include="Strategy\AI.cs" />
-    <Compile Include="Strategy\AIAttackLogicInterface.cs" />
-    <Compile Include="GameBoard.cs" />
-    <Compile Include="Sheep.cs" />
-    <Compile Include="Strategy\FromBottomAttackAI.cs" />
-    <Compile Include="Strategy\FromLeftAttackAI.cs" />
-    <Compile Include="Strategy\FromRightAttackAI.cs" />
-    <Compile Include="Strategy\FromTopAttackAI.cs" />
-    <Compile Include="Strategy\RandomAttackAI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
