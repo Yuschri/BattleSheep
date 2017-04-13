@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BattleSheep.Object;
 
 namespace BattleSheepConsole
 {
@@ -105,7 +106,7 @@ namespace BattleSheepConsole
             RowUntil--;
 
             Sheep Domba = new Sheep();
-            Domba.setLocation(RowFrom, ColFrom, RowUntil, ColUntil);
+            Domba.SetLocation(RowFrom, ColFrom, RowUntil, ColUntil);
 
             Player Pl = (Player == PLAYER.PLAYER1) ? Player1 : Player2;
 
@@ -235,7 +236,7 @@ namespace BattleSheepConsole
             if (Pl.GetSheepMap()[row, col] == 'X')
             {
                 Sheep Domba = this.GetSheep(row, col, PLAYER.PLAYER2);
-                Domba.setAttack();
+                Domba.SetAttack();
             }
             if (!IsSuccessAttack(row, col, PLAYER.PLAYER2))
                 Player2.AddTurn();
@@ -281,7 +282,7 @@ namespace BattleSheepConsole
                 int Player2DestroyedSheep = 0;
                 for (int i = 0; i < Player2.GetSheep().Count(); i++)
                 {
-                    if (Player2.GetSheep()[i].isDestroyed())
+                    if (Player2.GetSheep()[i].IsDestroyed())
                         Player2DestroyedSheep++;
                 }
                 if (Player2DestroyedSheep == Player2.GetSheep().Count())
@@ -339,7 +340,7 @@ namespace BattleSheepConsole
 
             for (int i = 0; i < Pl.GetSheep().Count; i++)
             {
-                if (Pl.GetSheep()[i].isSheepLocation(row, col))
+                if (Pl.GetSheep()[i].IsSheepLocation(row, col))
                     return Pl.GetSheep()[i];
             }
             return sheep;

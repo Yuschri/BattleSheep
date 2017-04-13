@@ -1,4 +1,4 @@
-﻿namespace BattleSheep
+﻿namespace BattleSheep.GUI
 {
     partial class MainMenu
     {

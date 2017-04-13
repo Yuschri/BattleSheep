@@ -60,7 +60,7 @@ namespace BattleSheepConsole.Strategy
                     // Maka tandai lokasi tersebut
                     if (Board.IsSheepLocation(row, col, this.target))
                     {
-                        if (!Board.GetSheep(row, col, this.target).isDestroyed())
+                        if (!Board.GetSheep(row, col, this.target).IsDestroyed())
                         {
                             lastAttackSuccessCol = col;
                             lastAttackSuccessRow = row;

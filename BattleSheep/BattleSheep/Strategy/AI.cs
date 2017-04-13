@@ -241,7 +241,7 @@ namespace BattleSheepConsole.Strategy
                 // Maka tandai lokasi tersebut
                 if (Board.IsSheepLocation(row, col, this.target))
                 {
-                    if (!Board.GetSheep(row, col, this.target).isDestroyed())
+                    if (!Board.GetSheep(row, col, this.target).IsDestroyed())
                     {
                         lastAttackSuccessCol = col;
                         lastAttackSuccessRow = row;
@@ -368,7 +368,7 @@ namespace BattleSheepConsole.Strategy
             // terakhir sebagai kosong
             if (Board.IsSheepLocation(row, col, this.target))
             {
-                if (Board.GetSheep(row, col, this.target).isDestroyed())
+                if (Board.GetSheep(row, col, this.target).IsDestroyed())
                 {
                     //Console.WriteLine("Reset");
                     lastAttackSuccessCol = -1;

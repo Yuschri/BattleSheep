@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleSheep
+namespace BattleSheep.Object
 {
     /**
      * Class untuk mendefiniskan sebuah kapal
@@ -26,24 +26,24 @@ namespace BattleSheep
 
         private int lengthAttacked = 0;
 
-        public bool isDestroyed()
+        public bool IsDestroyed()
         {
-            setSheepDestroyed();
+            SetSheepDestroyed();
             return destroyed;
         }
 
-        public void setSheepDestroyed()
+        public void SetSheepDestroyed()
         {
             if (lengthAttacked == length)
                 destroyed = true;
         }
 
-        public void setAttack()
+        public void SetAttack()
         {
             lengthAttacked++;
         }
 
-        private void setLength()
+        private void SetLength()
         {
             if (RowFrom == RowUntil)
                 length = ColUntil - ColFrom;
@@ -51,12 +51,12 @@ namespace BattleSheep
                 length = RowUntil - RowFrom;
         }
 
-        public int getLength()
+        public int GetLength()
         {
             return length;
         }
 
-        public bool isSheepLocation(int row, int col)
+        public bool IsSheepLocation(int row, int col)
         {
             if (RowFrom == RowUntil)
             {
@@ -71,13 +71,13 @@ namespace BattleSheep
             return false;
         }
 
-        public void setLocation(int RowFrom, int ColFrom, int RowUntil, int ColUntil)
+        public void SetLocation(int RowFrom, int ColFrom, int RowUntil, int ColUntil)
         {
             this.RowFrom = RowFrom;
             this.ColFrom = ColFrom;
             this.RowUntil = RowUntil;
             this.ColUntil = ColUntil;
-            this.setLength();
+            this.SetLength();
         }
 
         public string getPosition()
@@ -85,9 +85,15 @@ namespace BattleSheep
             return "(" + RowFrom + "," + ColFrom + ") -> (" + RowUntil + "," + ColUntil + ")";
         }
 
-        public int getAttackedLength()
+        public int GetAttackedLength()
         {
             return lengthAttacked;
+        }
+
+        public void ResetAttack()
+        {
+            lengthAttacked = 0;
+            destroyed = false;
         }
 
     }

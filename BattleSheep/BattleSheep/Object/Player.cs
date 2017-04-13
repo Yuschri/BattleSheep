@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BattleSheep
+namespace BattleSheep.Object
 {
     class Player
     {
@@ -96,7 +96,7 @@ namespace BattleSheep
             this.AttackedSheepMap = new char[10, 10];
             for (int i = 0; i < this.Sheep.Count; i++)
             {
-                this.Sheep[i].resetAttack();
+                this.Sheep[i].ResetAttack();
             }
         }
 

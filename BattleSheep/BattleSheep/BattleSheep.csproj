@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BattleSheepSys.cs" />
     <Compile Include="GUI\GameBoardGUI.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -98,11 +97,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Player.cs" />
+    <Compile Include="Object\Player.cs" />
     <Compile Include="Strategy\AI.cs" />
     <Compile Include="Strategy\AIAttackLogicInterface.cs" />
-    <Compile Include="GameBoard.cs" />
-    <Compile Include="Sheep.cs" />
+    <Compile Include="Controller\GameBoardController.cs" />
+    <Compile Include="Object\Sheep.cs" />
     <Compile Include="Strategy\FromBottomAttackAI.cs" />
     <Compile Include="Strategy\FromLeftAttackAI.cs" />
     <Compile Include="Strategy\FromRightAttackAI.cs" />
@@ -118,9 +117,7 @@
   <ItemGroup>
     <None Include="Resources\Menu.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Strategy\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

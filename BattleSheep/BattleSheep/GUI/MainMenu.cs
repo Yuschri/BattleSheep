@@ -8,12 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BattleSheep
+namespace BattleSheep.GUI
 {
     public partial class MainMenu : Panel
     {
         public GameBoardGUI papan;
+
         Control FControl;
+
         public MainMenu(Control Parent)
         {
             FControl = Parent;
