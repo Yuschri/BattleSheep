@@ -1,7 +1,7 @@
 ﻿
 namespace BattleSheepConsole.Strategy
 {
-    class FromRightAttackAI : AI, AIAttackLogicInterface
+    class FromRightAttackStrategy : Strategy, StrategyAttackLogicInterface
     {
 
         private byte sRow = 0;
@@ -10,7 +10,7 @@ namespace BattleSheepConsole.Strategy
 
         private bool BackToRight = false;
 
-        public FromRightAttackAI(GameBoardController Board) : base(Board)
+        public FromRightAttackStrategy(GameBoardController Board) : base(Board)
         {
             base.Board = Board;
         }

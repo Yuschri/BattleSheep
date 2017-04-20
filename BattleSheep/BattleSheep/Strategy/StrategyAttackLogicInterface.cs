@@ -1,7 +1,7 @@
 ﻿
 namespace BattleSheepConsole.Strategy
 {
-    interface AIAttackLogicInterface
+    interface StrategyAttackLogicInterface
     {
 
         /**
@@ -13,11 +13,6 @@ namespace BattleSheepConsole.Strategy
          * Melakukan serangan tergantung dari tiap AI
          */
         void SetAttack();
-
-        /**
-         * Melakukan serangan palsu
-         */
-        void SetFakeAttack();
 
         /**
          * Memberi nama pada strategy atau AI

@@ -1,10 +1,10 @@
 ﻿
 namespace BattleSheepConsole.Strategy
 {
-    class RandomAttackAI : AI, AIAttackLogicInterface
+    class OrganizedAttackStrategy : Strategy, StrategyAttackLogicInterface
     {
 
-        public RandomAttackAI(GameBoardController Board) : base(Board)
+        public OrganizedAttackStrategy(GameBoardController Board) : base(Board)
         {
             base.Board = Board;
         }
@@ -25,7 +25,7 @@ namespace BattleSheepConsole.Strategy
          * 
          * @return void
          */
-        public void SetAttack()
+        public new void SetAttack()
         {
             // Jika sebelumnya melakukan serangan pada sebuah blok dan
             // blok tersebut adalah kapal, juga bukan bagian terakhir sebuah kapal
@@ -40,17 +40,6 @@ namespace BattleSheepConsole.Strategy
             {
                 base.SetRandomAttack();
             }
-        }
-
-        /**
-         * Melakukan serangan palsu, digunakan
-         * untuk difficulty expert
-         * 
-         * @return void
-         */
-        public void SetFakeAttack()
-        {
-
         }
 
         /**

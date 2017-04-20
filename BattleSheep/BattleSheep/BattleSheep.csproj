@@ -98,15 +98,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Object\Player.cs" />
-    <Compile Include="Strategy\AI.cs" />
-    <Compile Include="Strategy\AIAttackLogicInterface.cs" />
+    <Compile Include="Strategy\Strategy.cs" />
+    <Compile Include="Strategy\StrategyAttackLogicInterface.cs" />
     <Compile Include="Controller\GameBoardController.cs" />
     <Compile Include="Object\Sheep.cs" />
-    <Compile Include="Strategy\FromBottomAttackAI.cs" />
-    <Compile Include="Strategy\FromLeftAttackAI.cs" />
-    <Compile Include="Strategy\FromRightAttackAI.cs" />
-    <Compile Include="Strategy\FromTopAttackAI.cs" />
-    <Compile Include="Strategy\RandomAttackAI.cs" />
+    <Compile Include="Strategy\FromBottomAttackStrategy.cs" />
+    <Compile Include="Strategy\FromLeftAttackStrategy.cs" />
+    <Compile Include="Strategy\FromRightAttackStrategy.cs" />
+    <Compile Include="Strategy\FromTopAttackStrategy.cs" />
+    <Compile Include="Strategy\OrganizedAttackStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

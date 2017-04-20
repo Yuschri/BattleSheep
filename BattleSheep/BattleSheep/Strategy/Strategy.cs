@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BattleSheepConsole.Strategy
 {
-    class AI
+    class Strategy
     {
 
         public enum DIFFICULT
@@ -41,7 +41,7 @@ namespace BattleSheepConsole.Strategy
         /**
          * Strategy yang dipilih
          */
-        protected AI Strategy;
+        protected Strategy strategy;
 
         /**
          * Nama dari Strategy yang dipilih
@@ -53,25 +53,25 @@ namespace BattleSheepConsole.Strategy
          */
         private int[] SheepPlan;
 
-        public AI(GameBoardController Board)
+        public Strategy(GameBoardController Board)
         {
             this.Board = Board;
         }
 
-        public AI(GameBoardController Board, DIFFICULT Difficult)
+        public Strategy(GameBoardController Board, DIFFICULT Difficult)
         {
             this.Board = Board;
             this.Difficult = Difficult;
             if (Difficult == DIFFICULT.EASY)
             {
-                RandomAttackAI Strategy = new RandomAttackAI(Board);
-                this.Strategy = Strategy;
+                OrganizedAttackStrategy Strategy = new OrganizedAttackStrategy(Board);
+                this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
             else if(Difficult == DIFFICULT.MEDIUM)
             {
-                FromBottomAttackAI Strategy = new FromBottomAttackAI(Board);
-                this.Strategy = Strategy;
+                FromBottomAttackStrategy Strategy = new FromBottomAttackStrategy(Board);
+                this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
             else
@@ -80,36 +80,36 @@ namespace BattleSheepConsole.Strategy
             }
         }
 
-        public void UseInsteadAI(AI AI)
+        public void UseInsteadAI(Strategy AI)
         {
-            if(AI is FromTopAttackAI)
+            if(AI is FromTopAttackStrategy)
             {
-                FromTopAttackAI Strategy = (FromTopAttackAI) AI;
-                this.Strategy = Strategy;
+                FromTopAttackStrategy Strategy = (FromTopAttackStrategy) AI;
+                this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
-            else if (AI is FromBottomAttackAI)
+            else if (AI is FromBottomAttackStrategy)
             {
-                FromBottomAttackAI Strategy = (FromBottomAttackAI) AI;
-                this.Strategy = Strategy;
+                FromBottomAttackStrategy Strategy = (FromBottomAttackStrategy) AI;
+                this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
-            else if (AI is FromLeftAttackAI)
+            else if (AI is FromLeftAttackStrategy)
             {
-                FromLeftAttackAI Strategy = (FromLeftAttackAI) AI;
-                this.Strategy = Strategy;
+                FromLeftAttackStrategy Strategy = (FromLeftAttackStrategy) AI;
+                this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
-            else if (AI is FromRightAttackAI)
+            else if (AI is FromRightAttackStrategy)
             {
-                FromRightAttackAI Strategy = (FromRightAttackAI) AI;
-                this.Strategy = Strategy;
+                FromRightAttackStrategy Strategy = (FromRightAttackStrategy) AI;
+                this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
             else
             {
-                RandomAttackAI Strategy = (RandomAttackAI) AI;
-                this.Strategy = Strategy;
+                OrganizedAttackStrategy Strategy = (OrganizedAttackStrategy) AI;
+                this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
         }
@@ -439,29 +439,29 @@ namespace BattleSheepConsole.Strategy
 
         public void SetAttack()
         {
-            if(this.Strategy is RandomAttackAI)
+            if(this.strategy is OrganizedAttackStrategy)
             {
-                RandomAttackAI CPU = (RandomAttackAI)this.Strategy;
+                OrganizedAttackStrategy CPU = (OrganizedAttackStrategy)this.strategy;
                 CPU.SetAttack();
             }
-            else if(this.Strategy is FromTopAttackAI)
+            else if(this.strategy is FromTopAttackStrategy)
             {
-                FromTopAttackAI CPU = (FromTopAttackAI)this.Strategy;
+                FromTopAttackStrategy CPU = (FromTopAttackStrategy)this.strategy;
                 CPU.SetAttack();
             }
-            else if (this.Strategy is FromBottomAttackAI)
+            else if (this.strategy is FromBottomAttackStrategy)
             {
-                FromBottomAttackAI CPU = (FromBottomAttackAI)this.Strategy;
+                FromBottomAttackStrategy CPU = (FromBottomAttackStrategy)this.strategy;
                 CPU.SetAttack();
             }
-            else if (this.Strategy is FromLeftAttackAI)
+            else if (this.strategy is FromLeftAttackStrategy)
             {
-                FromLeftAttackAI CPU = (FromLeftAttackAI)this.Strategy;
+                FromLeftAttackStrategy CPU = (FromLeftAttackStrategy)this.strategy;
                 CPU.SetAttack();
             }
             else 
             {
-                FromRightAttackAI CPU = (FromRightAttackAI)this.Strategy;
+                FromRightAttackStrategy CPU = (FromRightAttackStrategy)this.strategy;
                 CPU.SetAttack();
             }
         }
