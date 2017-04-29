@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleSheep.Object;
 
-namespace BattleSheepConsole
+namespace BattleSheep.Controller
 {
     class GameBoardController
     {
@@ -100,10 +100,6 @@ namespace BattleSheepConsole
             int RowUntil,
             PLAYER Player)
         {
-            ColFrom--;
-            RowFrom--;
-            ColUntil--;
-            RowUntil--;
 
             Sheep Domba = new Sheep();
             Domba.SetLocation(RowFrom, ColFrom, RowUntil, ColUntil);
@@ -137,10 +133,6 @@ namespace BattleSheepConsole
             PLAYER Player
             )
         {
-            ColFrom--;
-            RowFrom--;
-            ColUntil--;
-            RowUntil--;
 
             Player Pl = (Player == PLAYER.PLAYER1) ? Player1 : Player2;
 

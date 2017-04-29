@@ -1,5 +1,5 @@
 ﻿
-namespace BattleSheepConsole.Strategy
+namespace BattleSheep.Strategy
 {
     interface StrategyAttackLogicInterface
     {

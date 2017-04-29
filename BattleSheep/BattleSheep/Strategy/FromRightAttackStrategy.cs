@@ -1,5 +1,7 @@
 ﻿
-namespace BattleSheepConsole.Strategy
+using BattleSheep.Controller;
+
+namespace BattleSheep.Strategy
 {
     class FromRightAttackStrategy : Strategy, StrategyAttackLogicInterface
     {

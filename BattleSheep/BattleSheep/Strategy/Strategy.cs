@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using BattleSheep.Controller;
 
-namespace BattleSheepConsole.Strategy
+namespace BattleSheep.Strategy
 {
     class Strategy
     {
@@ -148,6 +148,11 @@ namespace BattleSheepConsole.Strategy
             int RowUntil = (unrotate) ? RowFrom + length : RowFrom;
             int ColUntil = (unrotate) ? ColFrom : ColFrom + length;
 
+            RowFrom--;
+            ColFrom--;
+            RowUntil--;
+            ColUntil--;
+
             // Melakukan pengecekan apakah kapal bisa diletakkan pada
             // posisi x dan y yang sudah ditentukan sebelumnya. Jika
             // tidak tersedia, maka akan mengulang pengacakan posisi
@@ -168,6 +173,10 @@ namespace BattleSheepConsole.Strategy
                 ColFrom = (unrotate) ? Rand.Next(1, 11) : Rand.Next(1, 11 - length);
                 RowUntil = (unrotate) ? RowFrom + length : RowFrom ;
                 ColUntil = (unrotate) ? ColFrom : ColFrom + length;
+                RowFrom--;
+                ColFrom--;
+                RowUntil--;
+                ColUntil--;
                 counter++;
             }
             // Jika perulangan sudah terlalu banyak, maka

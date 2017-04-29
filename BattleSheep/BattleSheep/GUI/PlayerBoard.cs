@@ -5,19 +5,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using BattleSheep.Controller;
 
 namespace BattleSheep.GUI
 {
     class PlayerBoard : TableLayoutPanel
     {
 
+        int[] SheepLengthList = new int[] {2,2,3,4,5 };
+
+        int SheepCounter = 0;
+
         List<List<Button>> BButton = new List<List<Button>>();
 
         private GameBoardGUI gameboard;
 
+        private GameBoardController Controller;
+
         public PlayerBoard(GameBoardGUI gameboard)
         {
             this.gameboard = gameboard;
+            this.Controller = this.gameboard.GetController();
             inisialisasi();
             for (int col = 0; col <= 9; col++)
             {
@@ -85,19 +93,44 @@ namespace BattleSheep.GUI
 
         private void K_MouseHover(object sender, EventArgs e)
         {
+            int length = this.SheepLengthList[this.SheepCounter];
             Button temp = (Button)sender;
             int baris = Convert.ToInt32((temp).Name[0]);
             int kolom = Convert.ToInt32((temp).Name[1]);
-            gameboard.TestPlace.Text = baris + "," + kolom;
+            this.gameboard.TestPlace.Text = baris + "," + kolom;
             //BButton[kolom][baris].Text = "S";
-            BButton[kolom][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
+            if (this.Controller.ConfirmPlayerSheepLocation(baris, kolom, kolom + length, baris, GameBoardController.PLAYER.PLAYER1))
+            {
+                for (int i = kolom; i < kolom + length; i++)
+                {
+                    BButton[i][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
+                }
+            }
+            else
+            {
+                BButton[kolom][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
+            }
         }
 
         private void K_Click(object sender, EventArgs e)
         {
+            int length = this.SheepLengthList[this.SheepCounter];
             int baris = Convert.ToInt32(((Button)sender).Name[0]);
             int kolom = Convert.ToInt32(((Button)sender).Name[1]);
-            gameboard.TestPlace.Text = baris + "," + kolom;
+            this.gameboard.TestPlace.Text = baris + "," + kolom;
+            if (this.Controller.ConfirmPlayerSheepLocation(baris, kolom, kolom + length, baris, GameBoardController.PLAYER.PLAYER1))
+            {
+                for (int i = kolom; i < kolom + length; i++)
+                {
+                    BButton[i][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
+                }
+                if(this.SheepCounter < 5)
+                    this.SheepCounter++;
+            }
+            else
+            {
+                BButton[kolom][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
+            }
         }
 
     }
