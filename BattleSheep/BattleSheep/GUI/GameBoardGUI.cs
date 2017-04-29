@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using BattleSheep.Controller;
 
@@ -51,8 +50,8 @@ namespace BattleSheep.GUI
 
         private void GeneratePlayerBoard()
         {
-            this.playerboard1 = new PlayerBoard(this);
-            this.playerboard2 = new PlayerBoard(this);
+            this.playerboard1 = new PlayerBoard(this,this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1));
+            this.playerboard2 = new PlayerBoard(this, this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1));
 
             this.PlayerBoardPanel.Controls.Add(playerboard1);
             this.PlayerBoardPanel.Controls.Add(playerboard2);

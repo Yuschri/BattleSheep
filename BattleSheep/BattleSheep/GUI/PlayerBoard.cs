@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using BattleSheep.Controller;
+using BattleSheep.Object;
 
 namespace BattleSheep.GUI
 {
@@ -18,22 +19,29 @@ namespace BattleSheep.GUI
 
         List<List<Button>> BButton = new List<List<Button>>();
 
+        private Player player;
+
         private GameBoardGUI gameboard;
 
         private GameBoardController Controller;
 
-        public PlayerBoard(GameBoardGUI gameboard)
+        public PlayerBoard(GameBoardGUI gameboard,Player player)
         {
+            this.player = player;
             this.gameboard = gameboard;
             this.Controller = this.gameboard.GetController();
-            inisialisasi();
+            this.inisialisasi();
+            this.GenerateButton();
+        }
+
+        private void GenerateButton()
+        {
             for (int col = 0; col <= 9; col++)
             {
                 BButton.Add(new List<Button>());
                 for (int row = 0; row <= 9; row++)
                 {
                     Button K = new Button();
-
                     K.Name = Convert.ToChar(row) + "" + Convert.ToChar(col) + "PButton";
                     K.Dock = DockStyle.Fill;
                     K.Click += K_Click;
@@ -108,7 +116,7 @@ namespace BattleSheep.GUI
             }
             else
             {
-                BButton[kolom][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
+                //BButton[kolom][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
             }
         }
 
