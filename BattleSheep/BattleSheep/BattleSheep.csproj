@@ -64,6 +64,9 @@
     <Compile Include="GUI\MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\PlayerBoard.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\GameBoardGUI.resx">
@@ -112,12 +115,20 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Menu1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Menu.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\sheep1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lambside.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lambside2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lambsidegrey.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
