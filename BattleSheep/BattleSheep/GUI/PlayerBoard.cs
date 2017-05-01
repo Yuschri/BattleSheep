@@ -32,6 +32,46 @@ namespace BattleSheep.GUI
             this.Controller = this.gameboard.GetController();
             this.inisialisasi();
             this.GenerateButton();
+            this.Controller.SetPlayerSheepLocation(2, 0, 5, 0, GameBoardController.PLAYER.PLAYER1);
+            this.RenderBoardGUI(true);
+        }
+
+        private void RenderBoardGUI(bool ShowSheep)
+        {
+            if (ShowSheep)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    //Console.Write(i + " ");
+                    for (int j = 0; j < 10; j++)
+                    {
+                        //if (j == 0)
+                        //{
+                        if (this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1).GetSheepMap()[i, j] == 'X')
+                        {
+                            //render jika domba kena serangan
+                            BButton[j][i].Image = global::BattleSheep.Properties.Resources.sheep2;
+                        }
+                        if (this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1).GetAttacked()[i, j] == 'O')
+                            {
+                                if (this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1).GetSheepMap()[i, j] == 'X')
+                                {
+                                    //render jika domba kena serangan
+                                    BButton[j][i].Image = global::BattleSheep.Properties.Resources.sheep1;
+                                }
+                                else
+                                {
+                                    //BButton[j][i].Image = global::BattleSheep.Properties.Resources.sheep1;
+                                    BButton[j][i].BackColor = Color.FromArgb(255, 244, 53);
+                                }
+                                //Console.Write(this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1).GetAttacked()[i, j] + " | ");
+                            }
+
+                            //Console.Write(this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1).GetAttacked()[i, j] + " | ");
+                        //}
+                    }
+                }
+            }
         }
 
         private void GenerateButton()
@@ -92,11 +132,33 @@ namespace BattleSheep.GUI
 
         private void K_MouseLeave(object sender, EventArgs e)
         {
+            int length = this.SheepLengthList[this.SheepCounter];
             Button temp = (Button)sender;
             int baris = Convert.ToInt32((temp).Name[0]);
             int kolom = Convert.ToInt32((temp).Name[1]);
-            BButton[kolom][baris].Text = "";
-            BButton[kolom][baris].Image = null;
+            if (!this.Controller.IsSheepLocation(baris, kolom, GameBoardController.PLAYER.PLAYER1))
+            {
+                if (this.Controller.ConfirmPlayerSheepLocation(kolom, baris, kolom + length - 1, baris, GameBoardController.PLAYER.PLAYER1))
+                {
+                    for (int i = kolom; i < kolom + length; i++)
+                    {
+                        BButton[i][baris].Image = null;
+                    }
+                }
+                else if (this.Controller.ConfirmPlayerSheepLocation(kolom, baris, kolom - length + 1, baris, GameBoardController.PLAYER.PLAYER1))
+                {
+                    for (int i = kolom; i > kolom - length; i--)
+                    {
+                        BButton[i][baris].Image = null;
+                    }
+                    //BButton[kolom][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
+                }
+                else
+                {
+                    BButton[kolom][baris].BackColor = Color.FromArgb(225, 90, 90);
+                }
+            }
+            
         }
 
         private void K_MouseHover(object sender, EventArgs e)
@@ -107,17 +169,26 @@ namespace BattleSheep.GUI
             int kolom = Convert.ToInt32((temp).Name[1]);
             this.gameboard.TestPlace.Text = baris + "," + kolom;
             //BButton[kolom][baris].Text = "S";
-            if (this.Controller.ConfirmPlayerSheepLocation(baris, kolom, kolom + length, baris, GameBoardController.PLAYER.PLAYER1))
+            if (this.Controller.ConfirmPlayerSheepLocation(kolom, baris, kolom + length - 1, baris, GameBoardController.PLAYER.PLAYER1))
             {
                 for (int i = kolom; i < kolom + length; i++)
                 {
                     BButton[i][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
                 }
             }
-            else
+            else if (this.Controller.ConfirmPlayerSheepLocation(kolom, baris, kolom - length + 1, baris, GameBoardController.PLAYER.PLAYER1))
             {
+                for (int i = kolom; i > kolom - length; i--)
+                {
+                    BButton[i][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
+                }
                 //BButton[kolom][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
             }
+            else
+            {
+                BButton[kolom][baris].BackColor = Color.FromArgb(225, 90, 90);
+            }
+            Console.WriteLine(baris + "," + kolom);
         }
 
         private void K_Click(object sender, EventArgs e)

@@ -142,7 +142,7 @@ namespace BattleSheep.Controller
             // Jika berotasi
             if (RowUntil != RowFrom)
             {
-                for (int row = RowFrom; row < RowUntil; row++)
+                for (int row = RowFrom; row <= RowUntil; row++)
                 {
 
                     if (Pl.GetSheepMap()[row, ColFrom] == 'X' ||
@@ -154,7 +154,7 @@ namespace BattleSheep.Controller
             // Jika tidak berotasi
             else
             {
-                for (int col = ColFrom; col < ColUntil; col++)
+                for (int col = ColFrom; col <= ColUntil; col++)
                 {
                     if (Pl.GetSheepMap()[RowFrom, col] == 'X' ||
                         !CheckDiagonalSheep(RowFrom, col, Player) ||
