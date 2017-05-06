@@ -25,6 +25,10 @@ namespace BattleSheep.GUI
 
         private GameBoardController Controller;
 
+        //simpan koordinat hover
+        //[0] = colfrom, [1] = rowfrom, [2] = coluntil, [3] = rowuntil
+        private int[] TempCoord = new int[4];
+
         public PlayerBoard(GameBoardGUI gameboard,Player player)
         {
             this.player = player;
@@ -32,12 +36,13 @@ namespace BattleSheep.GUI
             this.Controller = this.gameboard.GetController();
             this.inisialisasi();
             this.GenerateButton();
-            this.Controller.SetPlayerSheepLocation(2, 0, 5, 0, GameBoardController.PLAYER.PLAYER1);
+            this.Controller.SetPlayerSheepLocation(3, 0, 6, 0, GameBoardController.PLAYER.PLAYER1);
             this.RenderBoardGUI(true);
         }
 
         private void RenderBoardGUI(bool ShowSheep)
         {
+            this.Controller.RenderBoard();
             if (ShowSheep)
             {
                 for (int i = 0; i < 10; i++)
@@ -49,8 +54,8 @@ namespace BattleSheep.GUI
                         //{
                         if (this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1).GetSheepMap()[i, j] == 'X')
                         {
-                            //render jika domba kena serangan
-                            BButton[j][i].Image = global::BattleSheep.Properties.Resources.sheep2;
+                            //render domba
+                            BButton[j][i].Image = global::BattleSheep.Properties.Resources.sheep1;
                         }
                         if (this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1).GetAttacked()[i, j] == 'O')
                             {
@@ -62,7 +67,7 @@ namespace BattleSheep.GUI
                                 else
                                 {
                                     //BButton[j][i].Image = global::BattleSheep.Properties.Resources.sheep1;
-                                    BButton[j][i].BackColor = Color.FromArgb(255, 244, 53);
+                                    BButton[j][i].BackColor = Color.FromArgb(0, 0, 0);
                                 }
                                 //Console.Write(this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1).GetAttacked()[i, j] + " | ");
                             }
@@ -84,7 +89,7 @@ namespace BattleSheep.GUI
                     Button K = new Button();
                     K.Name = Convert.ToChar(row) + "" + Convert.ToChar(col) + "PButton";
                     K.Dock = DockStyle.Fill;
-                    K.Click += K_Click;
+                    K.MouseClick += K_Click;
                     K.Padding = new Padding(0);
                     K.Margin = new Padding(0);
                     K.FlatStyle = FlatStyle.Flat;
@@ -92,7 +97,7 @@ namespace BattleSheep.GUI
                     K.FlatAppearance.BorderColor = Color.FromArgb(125, 125, 125);
                     K.BackColor = Color.FromArgb(230, 230, 240);
                     K.TextAlign = ContentAlignment.MiddleCenter;
-                    K.MouseHover += K_MouseHover;
+                    K.MouseEnter += K_MouseEnter;
                     K.MouseLeave += K_MouseLeave;
                     BButton[col].Add(K);
                     this.Controls.Add(BButton[col][row], col, row);
@@ -136,32 +141,51 @@ namespace BattleSheep.GUI
             Button temp = (Button)sender;
             int baris = Convert.ToInt32((temp).Name[0]);
             int kolom = Convert.ToInt32((temp).Name[1]);
-            if (!this.Controller.IsSheepLocation(baris, kolom, GameBoardController.PLAYER.PLAYER1))
+
+            if (TempCoord[0]!=-1)
             {
-                if (this.Controller.ConfirmPlayerSheepLocation(kolom, baris, kolom + length - 1, baris, GameBoardController.PLAYER.PLAYER1))
+                // jika rotasi
+                if (!this.Controller.IsSheepLocation(baris,kolom, GameBoardController.PLAYER.PLAYER1))
+                {
+                    if (TempCoord[0] == TempCoord[2])
+                    {
+                        for (int i = TempCoord[1]; i <= TempCoord[3]; i++)
+                        {
+                            BButton[i][TempCoord[3]].Image = null;
+                        }
+                    }
+                    // jika tidak berotasi
+                    else if (TempCoord[1] == TempCoord[3])
+                    {
+                        //Console.WriteLine(TempCoord[0] + " " + TempCoord[1] + " " + TempCoord[2] + " " + TempCoord[3]);
+                        for (int i = TempCoord[0]; i <= TempCoord[2]; i++)
+                        {
+                            BButton[i][TempCoord[1]].Image = null;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (kolom + length <= 9)
                 {
                     for (int i = kolom; i < kolom + length; i++)
                     {
-                        BButton[i][baris].Image = null;
+                        BButton[i][baris].BackColor = Color.FromArgb(230, 230, 240);
                     }
-                }
-                else if (this.Controller.ConfirmPlayerSheepLocation(kolom, baris, kolom - length + 1, baris, GameBoardController.PLAYER.PLAYER1))
-                {
-                    for (int i = kolom; i > kolom - length; i--)
-                    {
-                        BButton[i][baris].Image = null;
-                    }
-                    //BButton[kolom][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
                 }
                 else
                 {
-                    BButton[kolom][baris].BackColor = Color.FromArgb(225, 90, 90);
+                    for (int i = kolom; i > kolom - length; i--)
+                    {
+                        BButton[i][baris].BackColor = Color.FromArgb(230, 230, 240);
+                    }
                 }
+                //BButton[kolom][baris].BackColor = Color.FromArgb(230, 230, 240);
             }
-            
         }
 
-        private void K_MouseHover(object sender, EventArgs e)
+        private void K_MouseEnter(object sender, EventArgs e)
         {
             int length = this.SheepLengthList[this.SheepCounter];
             Button temp = (Button)sender;
@@ -173,22 +197,44 @@ namespace BattleSheep.GUI
             {
                 for (int i = kolom; i < kolom + length; i++)
                 {
-                    BButton[i][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
+                    BButton[i][baris].Image = global::BattleSheep.Properties.Resources.greysheep;
                 }
+                TempCoord[0] = kolom;
+                TempCoord[1] = baris;
+                TempCoord[2] = kolom + length - 1;
+                TempCoord[3] = baris;
             }
-            else if (this.Controller.ConfirmPlayerSheepLocation(kolom, baris, kolom - length + 1, baris, GameBoardController.PLAYER.PLAYER1))
+            else if (this.Controller.ConfirmPlayerSheepLocation(kolom - length + 1, baris, kolom, baris, GameBoardController.PLAYER.PLAYER1))
             {
                 for (int i = kolom; i > kolom - length; i--)
                 {
-                    BButton[i][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
+                    BButton[i][baris].Image = global::BattleSheep.Properties.Resources.greysheep;
                 }
+                TempCoord[0] = kolom - length + 1;
+                TempCoord[1] = baris;
+                TempCoord[2] = kolom;
+                TempCoord[3] = baris;
                 //BButton[kolom][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
             }
             else
             {
-                BButton[kolom][baris].BackColor = Color.FromArgb(225, 90, 90);
+                if (kolom + length <= 9)
+                {
+                    for (int i = kolom; i < kolom + length; i++)
+                    {
+                        BButton[i][baris].BackColor = Color.FromArgb(225, 90, 90);
+                    }
+                }
+                else
+                {
+                    for (int i = kolom; i > kolom - length; i--)
+                    {
+                        BButton[i][baris].BackColor = Color.FromArgb(225, 90, 90);
+                    }
+                }
+                TempCoord[0] = -1;
             }
-            Console.WriteLine(baris + "," + kolom);
+            //Console.WriteLine(baris + "," + kolom);
         }
 
         private void K_Click(object sender, EventArgs e)
@@ -197,19 +243,20 @@ namespace BattleSheep.GUI
             int baris = Convert.ToInt32(((Button)sender).Name[0]);
             int kolom = Convert.ToInt32(((Button)sender).Name[1]);
             this.gameboard.TestPlace.Text = baris + "," + kolom;
-            if (this.Controller.ConfirmPlayerSheepLocation(baris, kolom, kolom + length, baris, GameBoardController.PLAYER.PLAYER1))
+            if (this.Controller.ConfirmPlayerSheepLocation(kolom, baris, kolom + length - 1 , baris, GameBoardController.PLAYER.PLAYER1))
             {
-                for (int i = kolom; i < kolom + length; i++)
-                {
-                    BButton[i][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
-                }
-                if(this.SheepCounter < 5)
+                this.Controller.SetPlayerSheepLocation(kolom, baris, kolom + length, baris, GameBoardController.PLAYER.PLAYER1);
+                if (this.SheepCounter < 4)
                     this.SheepCounter++;
             }
-            else
+            else if (this.Controller.ConfirmPlayerSheepLocation(kolom - length + 1, baris, kolom, baris, GameBoardController.PLAYER.PLAYER1))
             {
-                BButton[kolom][baris].Image = global::BattleSheep.Properties.Resources.sheep1;
+                this.Controller.SetPlayerSheepLocation(kolom - length + 1, baris, kolom + 1, baris, GameBoardController.PLAYER.PLAYER1);
+                if (this.SheepCounter < 4)
+                    this.SheepCounter++;
             }
+            TempCoord[0] = -1;
+            this.RenderBoardGUI(true);
         }
 
     }

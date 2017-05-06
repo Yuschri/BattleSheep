@@ -93,9 +93,29 @@ namespace BattleSheep.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap sheep1hit {
+            get {
+                object obj = ResourceManager.GetObject("sheep1hit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap sheep2 {
             get {
                 object obj = ResourceManager.GetObject("sheep2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sheep2hit {
+            get {
+                object obj = ResourceManager.GetObject("sheep2hit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

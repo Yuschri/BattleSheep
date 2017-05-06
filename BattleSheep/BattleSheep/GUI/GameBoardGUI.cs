@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using BattleSheep.Controller;
 
@@ -31,6 +32,9 @@ namespace BattleSheep.GUI
          * Player Board untuk player 1
          */
         private PlayerBoard playerboard1;
+        private Button reset = new Button();
+        private Button rotate = new Button();
+        private TableLayoutPanel PanelAtas = new TableLayoutPanel();
 
         /**
          * Player Board untuk player 2
@@ -51,10 +55,12 @@ namespace BattleSheep.GUI
         private void GeneratePlayerBoard()
         {
             this.playerboard1 = new PlayerBoard(this,this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1));
-            this.playerboard2 = new PlayerBoard(this, this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1));
+            this.playerboard2 = new PlayerBoard(this,this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1));
 
             this.PlayerBoardPanel.Controls.Add(playerboard1);
             this.PlayerBoardPanel.Controls.Add(playerboard2);
+
+            this.Controls.Add(PanelAtas);
 
             this.Controls.Add(PlayerBoardPanel);
         }
@@ -62,12 +68,20 @@ namespace BattleSheep.GUI
         private void Init()
         {
             this.PlayerBoardPanel.Size = new Size(740, 370);
+            this.PlayerBoardPanel.Location = new Point(0,50);
             this.PlayerBoardPanel.ColumnCount = 2;
             this.PlayerBoardPanel.RowCount = 1;
             this.PlayerBoardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             this.PlayerBoardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             this.PlayerBoardPanel.RowStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            this.GeneratePanelAtas();
             this.GeneratePlayerBoard();
+        }
+
+        private void GeneratePanelAtas()
+        {
+            this.PanelAtas.Size = new Size(740, 50);
+            this.reset.Size = new Size(50, 10);
         }
 
         internal GameBoardController GetController()

@@ -137,6 +137,9 @@ namespace BattleSheep.Controller
             if (ColFrom > 9 || ColUntil > 9 || RowFrom > 9 || RowUntil > 9)
                 return false;
 
+            if (ColFrom < 0 || ColUntil < 0 || RowFrom < 0 || RowUntil < 0)
+                return false;
+
             Player Pl = (Player == PLAYER.PLAYER1) ? Player1 : Player2;
 
             // Jika berotasi

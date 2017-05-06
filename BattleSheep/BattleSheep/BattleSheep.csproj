@@ -121,13 +121,19 @@
     <None Include="Resources\sheep1.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\lambside.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\lambside2.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\lambsidegrey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lambside.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lambside-hit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lambside2-hit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

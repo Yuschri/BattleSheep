@@ -26,7 +26,7 @@ namespace BattleSheep.GUI
         private void play_Click(object sender, EventArgs e)
         {
             FControl.Controls.RemoveAt(0);
-            FControl.Size = new Size(800, 600);
+            FControl.Size = new Size(760, 550);
             FControl.Controls.Add(papan);
         }
     }

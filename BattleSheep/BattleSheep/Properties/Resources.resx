@@ -124,10 +124,16 @@
   <data name="Menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Menu.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="sheep2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lambside2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="sheep1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lambside.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="sheep2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\lambside2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="sheep1hit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lambside-hit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sheep2hit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lambside2-hit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
