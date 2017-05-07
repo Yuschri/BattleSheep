@@ -11,19 +11,6 @@ namespace BattleSheep.GUI
         Control FControl;
 
         /**
-         * Daftar Status pada GameBoard
-         */
-        public enum STATE
-        {
-            PLAYING, PUTSHEEP
-        }
-
-        /**
-         * Status dari GameBoard
-         */
-        public STATE Status;
-
-        /**
          * Panel untuk membuat dua layout Board bagian kana dan kiri
          */
         private TableLayoutPanel PlayerBoardPanel = new TableLayoutPanel();

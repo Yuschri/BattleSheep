@@ -8,6 +8,19 @@ namespace BattleSheep.Controller
     class GameBoardController
     {
 
+        /**
+         * Daftar Status pada GameBoard
+         */
+        public enum STATE
+        {
+            PLAYING, PUTSHEEP
+        }
+
+        /**
+         * Status dari GameBoard
+         */
+        public STATE Status;
+
         public enum PLAYER
         {
             PLAYER1, PLAYER2
@@ -350,6 +363,13 @@ namespace BattleSheep.Controller
             return (Player == PLAYER.PLAYER1) ? Player1 : Player2;
         }
 
+        /**
+         * Mengatur Status Game
+         */
+        public void SetGameStatus(STATE Status)
+        {
+            this.Status = Status;
+        }
     }
 
 }
