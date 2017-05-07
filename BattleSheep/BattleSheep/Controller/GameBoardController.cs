@@ -81,17 +81,18 @@ namespace BattleSheep.Controller
         }
 
         /**
-         * Mereset Semua kapal
+         * Mereset Semua domba
          */
         public void ResetSheep(PLAYER Player)
         {
             Player Pl = (Player == PLAYER.PLAYER1) ? Player1 : Player2;
             Pl.SetSheepMap(new char[10, 10]);
             Pl.SetSheep(new List<Sheep>());
+            Console.WriteLine(Pl.GetName());
         }
 
         /**
-         * Meletakkan kapal player pada map
+         * Meletakkan domba player pada map
          */
         public void SetPlayerSheepLocation(
             int ColFrom,

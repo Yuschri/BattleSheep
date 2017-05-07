@@ -81,7 +81,34 @@ namespace BattleSheep.GUI
         private void GeneratePanelAtas()
         {
             this.PanelAtas.Size = new Size(740, 50);
-            this.reset.Size = new Size(50, 10);
+            this.PanelAtas.BackColor = Color.Azure;
+            //this.reset.Size = new Size(50, 10);
+            this.rotate.Margin = new Padding(12);
+            this.rotate.BackColor = Color.FromArgb(230, 230, 240);
+            this.rotate.Name = "rotate";
+            this.rotate.Text = "Rotate";
+            this.rotate.FlatStyle = FlatStyle.Flat;
+            this.rotate.MouseClick += Rotate_MouseClick;
+            this.PanelAtas.Controls.Add(rotate);
+
+            this.reset.Margin = new Padding(12);
+            this.reset.BackColor = Color.FromArgb(230, 230, 240);
+            this.reset.Name = "reset";
+            this.reset.Text = "Reset";
+            this.reset.FlatStyle = FlatStyle.Flat;
+            this.reset.MouseClick += Reset_MouseClick;
+            this.PanelAtas.Controls.Add(reset);
+            
+        }
+
+        private void Rotate_MouseClick(object sender, MouseEventArgs e)
+        {
+            playerboard1.RotateSheep();
+        }
+
+        private void Reset_MouseClick(object sender, MouseEventArgs e)
+        {
+            playerboard1.ResetSheep();
         }
 
         internal GameBoardController GetController()
