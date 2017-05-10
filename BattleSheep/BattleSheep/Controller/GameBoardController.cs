@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleSheep.Object;
+using BattleSheep.Strategy;
 
 namespace BattleSheep.Controller
 {
@@ -26,9 +27,13 @@ namespace BattleSheep.Controller
             PLAYER1, PLAYER2
         }
 
+        private PLAYER CurrentPlayer;
+
         private Player Player1;
 
         private Player Player2;
+
+        private Strategy.Strategy CPU;
 
         /**
          * Melakukan inisialisasi GameBoard dengan syrata memasukkan
@@ -49,6 +54,11 @@ namespace BattleSheep.Controller
             Player1 = new Player(Player1Name);
             Player2 = new Player("CPU");
             Player2.IsCPU(true);
+            Player1.SetPlayerType(PLAYER.PLAYER1);
+            Player2.SetPlayerType(PLAYER.PLAYER2);
+
+            this.CPU = new Strategy.Strategy(this,Strategy.Strategy.DIFFICULT.EASY);
+            this.CPU.SetAISheep(new int[] { 2,2,3,4,5});
         }
 
         /**
@@ -101,7 +111,6 @@ namespace BattleSheep.Controller
             Player Pl = (Player == PLAYER.PLAYER1) ? Player1 : Player2;
             Pl.SetSheepMap(new char[10, 10]);
             Pl.SetSheep(new List<Sheep>());
-            Console.WriteLine(Pl.GetName());
         }
 
         /**
@@ -366,9 +375,24 @@ namespace BattleSheep.Controller
         /**
          * Mengatur Status Game
          */
-        public void SetGameStatus(STATE Status)
+        public void SetGameState(STATE Status)
         {
             this.Status = Status;
+        }
+
+        public STATE GetGameState()
+        {
+            return this.Status;
+        }
+
+        public void SetCurrentPlayer(PLAYER CurrentPlayer)
+        {
+            this.CurrentPlayer = CurrentPlayer;
+        }
+
+        public PLAYER GetCurrentPlayer()
+        {
+            return this.CurrentPlayer;
         }
     }
 

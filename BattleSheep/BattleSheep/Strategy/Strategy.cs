@@ -29,7 +29,7 @@ namespace BattleSheep.Strategy
 
         protected int lastAttackSuccessCol = -1;
 
-        protected GameBoardController.PLAYER target = GameBoardController.PLAYER.PLAYER2;
+        protected GameBoardController.PLAYER target = GameBoardController.PLAYER.PLAYER1;
 
         /**
          * Jenis difficult
@@ -200,7 +200,7 @@ namespace BattleSheep.Strategy
                     RowFrom,
                     ColUntil,
                     RowUntil,
-                    this.target
+                    GameBoardController.PLAYER.PLAYER2
                     );
             }
                 

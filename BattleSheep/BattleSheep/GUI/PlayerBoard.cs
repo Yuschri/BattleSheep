@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using BattleSheep.Controller;
@@ -13,19 +10,29 @@ namespace BattleSheep.GUI
     class PlayerBoard : TableLayoutPanel
     {
 
-        int[] SheepLengthList = new int[] {2,2,3,4,5 };
+        private int[] SheepLengthList = new int[] {2,2,3,4,5 };
 
-        int SheepCounter = 0;
+        private int SheepCounter = 0;
 
-        bool rotate = false;
-
-        List<List<Button>> BButton = new List<List<Button>>();
+        private bool rotate = false;
+        
+        private List<List<Button>> BButton = new List<List<Button>>();
 
         private Player player;
 
         private GameBoardGUI gameboard;
 
         private GameBoardController Controller;
+
+        private TableLayoutPanel SheepArena = new TableLayoutPanel();
+
+        private FlowLayoutPanel TopPanel = new FlowLayoutPanel();
+
+        private Button RotateButton = new Button();
+
+        private Button ResetButton = new Button();
+
+        private Button StartButton = new Button();
 
         //simpan koordinat hover
         //[0] = colfrom, [1] = rowfrom, [2] = coluntil, [3] = rowuntil
@@ -38,11 +45,10 @@ namespace BattleSheep.GUI
             this.Controller = this.gameboard.GetController();
             this.inisialisasi();
             this.GenerateButton();
-            this.Controller.SetPlayerSheepLocation(3, 0, 6, 0, GameBoardController.PLAYER.PLAYER1);
             this.RenderBoardGUI(true);
         }
 
-        private void RenderBoardGUI(bool ShowSheep)
+        public void RenderBoardGUI(bool ShowSheep)
         {
             if (ShowSheep)
             {
@@ -53,7 +59,7 @@ namespace BattleSheep.GUI
                     {
                         //if (j == 0)
                         //{
-                        if (this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1).GetSheepMap()[i, j] == 'X')
+                        if (this.Controller.GetPlayer(this.player.GetPlayerType()).GetSheepMap()[i, j] == 'X')
                         {
                             //render domba
                             BButton[j][i].Image = global::BattleSheep.Properties.Resources.sheep1;
@@ -62,9 +68,9 @@ namespace BattleSheep.GUI
                         {
                             BButton[j][i].Image = null;
                         }
-                        if (this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1).GetAttacked()[i, j] == 'O')
+                        if (this.Controller.GetPlayer(this.player.GetPlayerType()).GetAttacked()[i, j] == 'O')
                             {
-                                if (this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1).GetSheepMap()[i, j] == 'X')
+                                if (this.Controller.GetPlayer(this.player.GetPlayerType()).GetSheepMap()[i, j] == 'X')
                                 {
                                     //render jika domba kena serangan
                                     BButton[j][i].Image = global::BattleSheep.Properties.Resources.sheep1;
@@ -105,44 +111,73 @@ namespace BattleSheep.GUI
                     K.MouseEnter += K_MouseEnter;
                     K.MouseLeave += K_MouseLeave;
                     BButton[col].Add(K);
-                    this.Controls.Add(BButton[col][row], col, row);
+                    this.SheepArena.Controls.Add(BButton[col][row], col, row);
                 }
             }
         }
 
         private void inisialisasi()
         {
-            this.ColumnCount = 10;
-            this.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.Location = new System.Drawing.Point(12, 12);
-            this.Name = "tableLayoutPanel1";
-            this.RowCount = 10;
-            this.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.Size = new System.Drawing.Size(370, 370);
+            this.ColumnCount = 1;
+            this.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.RowCount = 2;
+            this.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.Size = new System.Drawing.Size(370, 450);
             this.TabIndex = 0;
+
+            this.SheepArena.ColumnCount = 10;
+            for (int i = 1; i <= 10; i++)
+            {
+                this.SheepArena.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            }
+            this.SheepArena.Location = new System.Drawing.Point(12, 12);
+            this.SheepArena.Name = "tableLayoutPanel1";
+            this.SheepArena.RowCount = 10;
+            for (int i = 1; i <= 10; i++)
+            {
+                this.SheepArena.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            }
+            this.SheepArena.Dock = DockStyle.Fill;
+
+            // Top Panel
+            this.RotateButton.Margin = new Padding(12);
+            this.RotateButton.BackColor = Color.FromArgb(230, 230, 240);
+            this.RotateButton.Name = "rotate";
+            this.RotateButton.Text = "Rotate";
+            this.RotateButton.FlatStyle = FlatStyle.Flat;
+            this.RotateButton.MouseClick += RotateSheep;
+
+            this.ResetButton.Margin = new Padding(12);
+            this.ResetButton.BackColor = Color.FromArgb(230, 230, 240);
+            this.ResetButton.Name = "reset";
+            this.ResetButton.Text = "Reset";
+            this.ResetButton.FlatStyle = FlatStyle.Flat;
+            this.ResetButton.MouseClick += ResetSheep;
+
+            this.StartButton.Margin = new Padding(12);
+            this.StartButton.BackColor = Color.FromArgb(230, 230, 240);
+            this.StartButton.Name = "start";
+            this.StartButton.Text = "Mulai";
+            this.StartButton.FlatStyle = FlatStyle.Flat;
+            this.StartButton.MouseClick += ResetSheep;
+
+            this.TopPanel.FlowDirection = FlowDirection.TopDown;
+            this.TopPanel.Dock = DockStyle.Fill;
+            if (!this.player.IsCPU())
+            {
+                this.TopPanel.Controls.Add(this.RotateButton);
+                this.TopPanel.Controls.Add(this.ResetButton);
+                this.TopPanel.Controls.Add(this.StartButton);
+            }
+
+            this.Controls.Add(this.TopPanel);
+            this.Controls.Add(this.SheepArena);
         }
 
         private void K_MouseLeave(object sender, EventArgs e)
         {
-            int length = this.SheepLengthList[this.SheepCounter];
+            int length = (this.SheepCounter < this.SheepLengthList.Length) ? this.SheepLengthList[this.SheepCounter] : this.SheepLengthList[this.SheepCounter-1];
             Button temp = (Button)sender;
             int baris = Convert.ToInt32((temp).Name[0]);
             int kolom = Convert.ToInt32((temp).Name[1]);
@@ -212,71 +247,61 @@ namespace BattleSheep.GUI
 
         private void K_MouseEnter(object sender, EventArgs e)
         {
-            int length = this.SheepLengthList[this.SheepCounter];
-            Button temp = (Button)sender;
-            int baris = Convert.ToInt32((temp).Name[0]);
-            int kolom = Convert.ToInt32((temp).Name[1]);
-            this.gameboard.TestPlace.Text = baris + "," + kolom;
-            //BButton[kolom][baris].Text = "S";
-            if (rotate)
+            if (this.Controller.GetGameState() == GameBoardController.STATE.PUTSHEEP)
             {
-                this.DrawVerticalSheep(kolom, baris, length);
-            }
-            else
-            {
-                this.DrawHorizontalSheep(kolom, baris, length);
+                if (this.Controller.GetCurrentPlayer() == this.player.GetPlayerType())
+                {
+                    int length = (this.SheepCounter < this.SheepLengthList.Length) ? this.SheepLengthList[this.SheepCounter] : this.SheepLengthList[this.SheepCounter - 1];
+                    Button temp = (Button)sender;
+                    int baris = Convert.ToInt32((temp).Name[0]);
+                    int kolom = Convert.ToInt32((temp).Name[1]);
+                    this.gameboard.TestPlace.Text = baris + "," + kolom;
+                    //BButton[kolom][baris].Text = "S";
+                    if (rotate)
+                    {
+                        this.DrawVerticalSheep(kolom, baris, length);
+                    }
+                    else
+                    {
+                        this.DrawHorizontalSheep(kolom, baris, length);
+                    }
+                }
             }
             //Console.WriteLine(baris + "," + kolom);
         }
 
         private void K_Click(object sender, EventArgs e)
         {
-            int length = this.SheepLengthList[this.SheepCounter];
-            int baris = Convert.ToInt32(((Button)sender).Name[0]);
-            int kolom = Convert.ToInt32(((Button)sender).Name[1]);
-            this.gameboard.TestPlace.Text = baris + "," + kolom;
-            if (rotate)
+            if (this.Controller.GetGameState() == GameBoardController.STATE.PUTSHEEP)
             {
-                if (this.Controller.ConfirmPlayerSheepLocation(kolom, baris, kolom, baris + length - 1, GameBoardController.PLAYER.PLAYER1))
+                if (this.Controller.GetCurrentPlayer() == this.player.GetPlayerType())
                 {
-                    this.Controller.SetPlayerSheepLocation(kolom, baris, kolom, baris + length, GameBoardController.PLAYER.PLAYER1);
-                    if (this.SheepCounter < 4)
-                        this.SheepCounter++;
-                }
-                else if (this.Controller.ConfirmPlayerSheepLocation(kolom, baris - length + 1, kolom, baris, GameBoardController.PLAYER.PLAYER1))
-                {
-                    this.Controller.SetPlayerSheepLocation(kolom, baris - length + 1, kolom, baris + 1, GameBoardController.PLAYER.PLAYER1);
-                    if (this.SheepCounter < 4)
-                        this.SheepCounter++;
+                    int length = this.SheepLengthList[this.SheepCounter];
+                    int baris = Convert.ToInt32(((Button)sender).Name[0]);
+                    int kolom = Convert.ToInt32(((Button)sender).Name[1]);
+                    this.gameboard.TestPlace.Text = baris + "," + kolom;
+                    if (rotate)
+                    {
+                        this.SetVerticalSheep(kolom, baris, length);
+                    }
+                    else
+                    {
+                        this.SetHorizontalSheep(kolom, baris, length);
+                    }
+                    TempCoord[0] = -1;
+                    this.RenderBoardGUI(true);
                 }
             }
-            else
-            {
-                if (this.Controller.ConfirmPlayerSheepLocation(kolom, baris, kolom + length - 1, baris, GameBoardController.PLAYER.PLAYER1))
-                {
-                    this.Controller.SetPlayerSheepLocation(kolom, baris, kolom + length, baris, GameBoardController.PLAYER.PLAYER1);
-                    if (this.SheepCounter < 4)
-                        this.SheepCounter++;
-                }
-                else if (this.Controller.ConfirmPlayerSheepLocation(kolom - length + 1, baris, kolom, baris, GameBoardController.PLAYER.PLAYER1))
-                {
-                    this.Controller.SetPlayerSheepLocation(kolom - length + 1, baris, kolom + 1, baris, GameBoardController.PLAYER.PLAYER1);
-                    if (this.SheepCounter < 4)
-                        this.SheepCounter++;
-                }
-            }
-            TempCoord[0] = -1;
-            this.RenderBoardGUI(true);
         }
 
-        public void ResetSheep()
+        public void ResetSheep(object sender, EventArgs args)
         {
-            this.Controller.ResetSheep(GameBoardController.PLAYER.PLAYER1);
+            this.Controller.ResetSheep(this.player.GetPlayerType());
             this.RenderBoardGUI(true);
             this.SheepCounter = 0;
         }
 
-        public void RotateSheep()
+        public void RotateSheep(object sender, EventArgs args)
         {
             rotate = !rotate;
         }
@@ -368,6 +393,50 @@ namespace BattleSheep.GUI
                     }
                 }
                 TempCoord[0] = -1;
+            }
+        }
+
+        private void SetVerticalSheep(int kolom, int baris, int length)
+        {
+            if (this.Controller.ConfirmPlayerSheepLocation(kolom, baris, kolom, baris + length - 1, GameBoardController.PLAYER.PLAYER1))
+            {
+                this.Controller.SetPlayerSheepLocation(kolom, baris, kolom, baris + length, GameBoardController.PLAYER.PLAYER1);
+                if (this.SheepCounter < this.SheepLengthList.Length)
+                    this.SheepCounter++;
+            }
+            else if (this.Controller.ConfirmPlayerSheepLocation(kolom, baris - length + 1, kolom, baris, GameBoardController.PLAYER.PLAYER1))
+            {
+                this.Controller.SetPlayerSheepLocation(kolom, baris - length + 1, kolom, baris + 1, GameBoardController.PLAYER.PLAYER1);
+                if (this.SheepCounter < this.SheepLengthList.Length)
+                    this.SheepCounter++;
+            }
+            if (this.SheepCounter == this.SheepLengthList.Length)
+            {
+                this.Controller.SetGameState(GameBoardController.STATE.PLAYING);
+                this.RotateButton.Enabled = false;
+                this.ResetButton.Enabled = false;
+            }
+        }
+
+        private void SetHorizontalSheep(int kolom, int baris, int length)
+        {
+            if (this.Controller.ConfirmPlayerSheepLocation(kolom, baris, kolom + length - 1, baris, GameBoardController.PLAYER.PLAYER1))
+            {
+                this.Controller.SetPlayerSheepLocation(kolom, baris, kolom + length, baris, GameBoardController.PLAYER.PLAYER1);
+                if (this.SheepCounter < this.SheepLengthList.Length)
+                    this.SheepCounter++;
+            }
+            else if (this.Controller.ConfirmPlayerSheepLocation(kolom - length + 1, baris, kolom, baris, GameBoardController.PLAYER.PLAYER1))
+            {
+                this.Controller.SetPlayerSheepLocation(kolom - length + 1, baris, kolom + 1, baris, GameBoardController.PLAYER.PLAYER1);
+                if (this.SheepCounter < this.SheepLengthList.Length)
+                    this.SheepCounter++;
+            }
+            if (this.SheepCounter == this.SheepLengthList.Length)
+            { 
+                this.Controller.SetGameState(GameBoardController.STATE.PLAYING);
+                this.RotateButton.Enabled = false;
+                this.ResetButton.Enabled = false;
             }
         }
 
