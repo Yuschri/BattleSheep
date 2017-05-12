@@ -26,13 +26,17 @@ namespace BattleSheep.GUI
 
         private TableLayoutPanel SheepArena = new TableLayoutPanel();
 
-        private FlowLayoutPanel TopPanel = new FlowLayoutPanel();
+        private TableLayoutPanel TopPanel = new TableLayoutPanel();
+
+        private FlowLayoutPanel TopPanelBawah = new FlowLayoutPanel();
 
         private Button RotateButton = new Button();
 
         private Button ResetButton = new Button();
 
         private Button StartButton = new Button();
+
+        private Label Nama = new Label();
 
         //simpan koordinat hover
         //[0] = colfrom, [1] = rowfrom, [2] = coluntil, [3] = rowuntil
@@ -141,34 +145,60 @@ namespace BattleSheep.GUI
             this.SheepArena.Dock = DockStyle.Fill;
 
             // Top Panel
-            this.RotateButton.Margin = new Padding(12);
+            this.RotateButton.Margin = new Padding(5);
             this.RotateButton.BackColor = Color.FromArgb(230, 230, 240);
             this.RotateButton.Name = "rotate";
             this.RotateButton.Text = "Rotate";
             this.RotateButton.FlatStyle = FlatStyle.Flat;
             this.RotateButton.MouseClick += RotateSheep;
 
-            this.ResetButton.Margin = new Padding(12);
+            this.ResetButton.Margin = new Padding(5);
             this.ResetButton.BackColor = Color.FromArgb(230, 230, 240);
             this.ResetButton.Name = "reset";
             this.ResetButton.Text = "Reset";
             this.ResetButton.FlatStyle = FlatStyle.Flat;
             this.ResetButton.MouseClick += ResetSheep;
 
-            this.StartButton.Margin = new Padding(12);
+            this.StartButton.Margin = new Padding(5);
             this.StartButton.BackColor = Color.FromArgb(230, 230, 240);
             this.StartButton.Name = "start";
             this.StartButton.Text = "Mulai";
             this.StartButton.FlatStyle = FlatStyle.Flat;
             this.StartButton.MouseClick += ResetSheep;
 
-            this.TopPanel.FlowDirection = FlowDirection.TopDown;
+            this.Nama.Text = player.GetName();
+            this.Nama.Font = new Font("Calibri", 14);
+            this.Dock = DockStyle.Bottom;
+
             this.TopPanel.Dock = DockStyle.Fill;
+            this.TopPanel.ColumnCount = 1;
+            this.TopPanel.RowCount = 2;
+            this.TopPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            this.TopPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            this.TopPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+
+            // panel bawah untuk TopPanel bagian bawah jadi 2 kolom
+            this.TopPanelBawah.FlowDirection = FlowDirection.LeftToRight;
+            this.TopPanel.Controls.Add(this.TopPanelBawah,0,1);
+            this.TopPanelBawah.Dock = DockStyle.Fill;
+            /*
+            this.TopPanelBawah.Dock = DockStyle.Fill;
+            this.TopPanelBawah.ColumnCount = 3;
+            this.TopPanelBawah.RowCount = 1;
+            this.TopPanelBawah.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 0.1F));
+            this.TopPanelBawah.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 0.1F));
+            this.TopPanelBawah.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 0.1F));
+            this.TopPanelBawah.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            this.TopPanelBawah.Padding = new Padding(0);
+            this.TopPanel.Controls.Add(TopPanelBawah, 0, 1);
+            */
+
             if (!this.player.IsCPU())
             {
-                this.TopPanel.Controls.Add(this.RotateButton);
-                this.TopPanel.Controls.Add(this.ResetButton);
-                this.TopPanel.Controls.Add(this.StartButton);
+                this.TopPanelBawah.Controls.Add(this.RotateButton);
+                this.TopPanelBawah.Controls.Add(this.ResetButton);
+                this.TopPanelBawah.Controls.Add(this.StartButton);
+                this.TopPanel.Controls.Add(this.Nama, 0, 0);
             }
 
             this.Controls.Add(this.TopPanel);

@@ -26,6 +26,7 @@ namespace BattleSheep.GUI
 
         private TableLayoutPanel PanelAtas = new TableLayoutPanel();
 
+        private Button back = new Button();
 
         /**
          * Player Board untuk player 2
@@ -42,6 +43,25 @@ namespace BattleSheep.GUI
             FControl = Parent;
             InitializeComponent();
             Init();
+        }
+
+        private void PanelAtasProperty()
+        {
+            this.back.Name = "back";
+            //this.back.Size = new Size(50,30);
+            this.back.Text = "Kembali";
+            this.back.Margin = new Padding(12);
+            this.back.FlatStyle = FlatStyle.Flat;
+            this.back.Click += Back_Click;
+            //this.PanelAtas.BackColor = Color.Azure;
+            this.PanelAtas.Size = new Size(740, 50);
+            this.PanelAtas.Controls.Add(back);
+            this.Controls.Add(PanelAtas);
+        }
+
+        private void Back_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void GeneratePlayerBoard()
@@ -64,6 +84,7 @@ namespace BattleSheep.GUI
             this.PlayerBoardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             this.PlayerBoardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             this.PlayerBoardPanel.RowStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            this.PanelAtasProperty();
             this.GeneratePlayerBoard();
         }
 
