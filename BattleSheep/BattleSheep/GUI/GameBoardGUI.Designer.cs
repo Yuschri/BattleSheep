@@ -30,7 +30,7 @@
         private void InitializeComponent()
         {
             //this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.TestPlace = new System.Windows.Forms.TextBox();
+            //this.TestPlace = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -43,17 +43,17 @@
             // 
             // TestPlace
             // 
-            this.TestPlace.Location = new System.Drawing.Point(12, 420);
-            this.TestPlace.Name = "TestPlace";
-            this.TestPlace.Size = new System.Drawing.Size(343, 20);
-            this.TestPlace.TabIndex = 1;
+            //this.TestPlace.Location = new System.Drawing.Point(12, 420);
+            //this.TestPlace.Name = "TestPlace";
+            //this.TestPlace.Size = new System.Drawing.Size(343, 20);
+            //this.TestPlace.TabIndex = 1;
             // 
             // GameBoardGUI
             // 
             this.ClientSize = new System.Drawing.Size(750, 550);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.TestPlace);
+            //this.Controls.Add(this.TestPlace);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "GameBoardGUI";
             this.Text = "Form1";

@@ -14,7 +14,7 @@ namespace BattleSheep.GUI
 
         private Player player;
 
-        private GameBoardGUI gameboard;
+        private GameBoardGUI Gameboard;
 
         private PlayerBoardController Controller;
 
@@ -34,12 +34,15 @@ namespace BattleSheep.GUI
 
         public PlayerBoard(GameBoardGUI gameboard,Player player)
         {
-            this.gameboard = gameboard;
+            this.Gameboard = gameboard;
             this.player = player;
-            this.Controller = new PlayerBoardController(this, this.gameboard.GetController());
+            this.Controller = new PlayerBoardController(this, this.Gameboard.GetController());
             this.inisialisasi();
             this.GenerateButton();
-            this.Controller.RenderBoardGUI(true);
+            if (this.player.GetPlayerType() == GameBoardController.PLAYER.PLAYER1)
+                this.Controller.RenderBoardGUI(true);
+            else
+                this.Controller.RenderBoardGUI(true);
         }
 
         private void GenerateButton()
@@ -112,7 +115,8 @@ namespace BattleSheep.GUI
             this.StartButton.Name = "start";
             this.StartButton.Text = "Mulai";
             this.StartButton.FlatStyle = FlatStyle.Flat;
-            this.StartButton.MouseClick += this.Controller.ResetSheep;
+            this.StartButton.MouseClick += this.Controller.StartGame;
+            this.StartButton.Enabled = false;
 
             this.Nama.Text = player.GetName();
             this.Nama.Font = new Font("Calibri", 14);
@@ -178,6 +182,11 @@ namespace BattleSheep.GUI
             return this.RotateButton;
         }
 
+        public Button GetStartButton()
+        {
+            return this.StartButton;
+        }
+
         internal Player GetPlayer()
         {
             return this.player;
@@ -186,6 +195,16 @@ namespace BattleSheep.GUI
         public List<List<Button>> GetBButton()
         {
             return this.BButton;
+        }
+
+        public GameBoardGUI GetGameBoard()
+        {
+            return this.Gameboard;
+        }
+
+        public PlayerBoardController GetController()
+        {
+            return this.Controller;
         }
 
     }

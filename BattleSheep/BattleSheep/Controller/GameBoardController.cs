@@ -14,7 +14,7 @@ namespace BattleSheep.Controller
          */
         public enum STATE
         {
-            PLAYING, PUTSHEEP
+            CONFIRMPLAYING, PLAYING, PUTSHEEP
         }
 
         /**
@@ -256,10 +256,10 @@ namespace BattleSheep.Controller
             //Player2Turn++;
             if (Pl.GetSheepMap()[row, col] == 'X')
             {
-                Sheep Domba = this.GetSheep(row, col, PLAYER.PLAYER2);
+                Sheep Domba = this.GetSheep(row, col, Pl.GetPlayerType());
                 Domba.SetAttack();
             }
-            if (!IsSuccessAttack(row, col, PLAYER.PLAYER2))
+            if (!IsSuccessAttack(row, col, Pl.GetPlayerType()))
                 Player2.AddTurn();
             //Console.WriteLine("Turn : " + Player2Turn);
         }
@@ -393,6 +393,11 @@ namespace BattleSheep.Controller
         public PLAYER GetCurrentPlayer()
         {
             return this.CurrentPlayer;
+        }
+
+        public Strategy.Strategy GetCPUPlayer()
+        {
+            return this.CPU;
         }
     }
 

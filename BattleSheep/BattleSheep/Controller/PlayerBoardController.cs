@@ -34,8 +34,6 @@ namespace BattleSheep.Controller
 
         public void RenderBoardGUI(bool ShowSheep)
         {
-            if (ShowSheep)
-            {
                 for (int i = 0; i < 10; i++)
                 {
                     //Console.Write(i + " ");
@@ -46,7 +44,10 @@ namespace BattleSheep.Controller
                         if (this.Controller.GetPlayer(this.player.GetPlayerType()).GetSheepMap()[i, j] == 'X')
                         {
                             //render domba
-                            this.playerBoard.GetBButton()[j][i].Image = global::BattleSheep.Properties.Resources.sheep1;
+                            if (ShowSheep)
+                            {
+                                this.playerBoard.GetBButton()[j][i].Image = global::BattleSheep.Properties.Resources.sheep1;
+                            }
                         }
                         else
                         {
@@ -57,7 +58,7 @@ namespace BattleSheep.Controller
                             if (this.Controller.GetPlayer(this.player.GetPlayerType()).GetSheepMap()[i, j] == 'X')
                             {
                                 //render jika domba kena serangan
-                                this.playerBoard.GetBButton()[j][i].Image = global::BattleSheep.Properties.Resources.sheep1;
+                                this.playerBoard.GetBButton()[j][i].Image = global::BattleSheep.Properties.Resources.sheep2hit;
                             }
                             else
                             {
@@ -71,7 +72,6 @@ namespace BattleSheep.Controller
                         //}
                     }
                 }
-            }
         }
 
         public void MouseLeave(Button temp)
@@ -169,13 +169,13 @@ namespace BattleSheep.Controller
 
         public void MouseClick(Button temp)
         {
+            int baris = temp.Name[0];
+            int kolom = temp.Name[1];
             if (this.Controller.GetGameState() == GameBoardController.STATE.PUTSHEEP)
             {
                 if (this.Controller.GetCurrentPlayer() == this.player.GetPlayerType())
                 {
                     int length = this.SheepLengthList[this.SheepCounter];
-                    int baris = temp.Name[0];
-                    int kolom = temp.Name[1];
                     //this.gameboard.TestPlace.Text = baris + "," + kolom;
                     if (rotate)
                     {
@@ -189,6 +189,18 @@ namespace BattleSheep.Controller
                     this.RenderBoardGUI(true);
                 }
             }
+            else if(this.Controller.GetGameState() == GameBoardController.STATE.PLAYING)
+            {
+                if (this.Controller.GetCurrentPlayer() != this.player.GetPlayerType())
+                {
+                    if (!this.Controller.IsSuccessAttack(baris, kolom, GameBoardController.PLAYER.PLAYER2)) {
+                        this.Controller.GetCPUPlayer().SetAttack();
+                        this.Controller.SetAttack(baris, kolom, GameBoardController.PLAYER.PLAYER2);
+                        this.playerBoard.GetGameBoard().GetPlayerBoardController(GameBoardController.PLAYER.PLAYER1).RenderBoardGUI(true);
+                        this.RenderBoardGUI(true);
+                    }
+                }
+            }
         }
 
         public void ResetSheep(object sender, EventArgs args)
@@ -196,6 +208,9 @@ namespace BattleSheep.Controller
             this.Controller.ResetSheep(this.player.GetPlayerType());
             this.RenderBoardGUI(true);
             this.SheepCounter = 0;
+            this.playerBoard.GetRotateButton().Enabled = true;
+            this.playerBoard.GetStartButton().Enabled = false;
+            this.Controller.SetGameState(GameBoardController.STATE.PUTSHEEP);
         }
 
         public void RotateSheep(object sender, EventArgs args)
@@ -309,9 +324,13 @@ namespace BattleSheep.Controller
             }
             if (this.SheepCounter == this.SheepLengthList.Length)
             {
-                this.Controller.SetGameState(GameBoardController.STATE.PLAYING);
+                this.Controller.SetGameState(GameBoardController.STATE.CONFIRMPLAYING);
                 this.playerBoard.GetRotateButton().Enabled = false;
-                this.playerBoard.GetResetButton().Enabled = false;
+                this.playerBoard.GetStartButton().Enabled = true;
+            }
+            else
+            {
+                this.playerBoard.GetStartButton().Enabled = false;
             }
         }
 
@@ -331,10 +350,20 @@ namespace BattleSheep.Controller
             }
             if (this.SheepCounter == this.SheepLengthList.Length)
             {
-                this.Controller.SetGameState(GameBoardController.STATE.PLAYING);
+                this.Controller.SetGameState(GameBoardController.STATE.CONFIRMPLAYING);
                 this.playerBoard.GetRotateButton().Enabled = false;
-                this.playerBoard.GetResetButton().Enabled = false;
+                this.playerBoard.GetStartButton().Enabled = true;
             }
+            else
+            {
+                this.playerBoard.GetStartButton().Enabled = false;
+            }
+        }
+
+        public void StartGame(object sender, EventArgs args)
+        {
+            this.playerBoard.GetResetButton().Enabled = false;
+            this.Controller.SetGameState(GameBoardController.STATE.PLAYING);
         }
 
     }

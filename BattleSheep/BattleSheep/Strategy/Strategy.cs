@@ -159,7 +159,7 @@ namespace BattleSheep.Strategy
             // Variabel counter berfungsi untuk mencegah adanya
             // infinite loop
             int counter = 1;
-            const int limitLoop = 20;
+            const int limitLoop = 50;
             while(!Board.ConfirmPlayerSheepLocation(
                 ColFrom,
                 RowFrom,
@@ -348,6 +348,7 @@ namespace BattleSheep.Strategy
             }
             if (right && !hasAttacked)
             {
+                Console.WriteLine("Masuk Kanan");
                 row = lastAttackSuccessRow;
                 if (Board.IsSuccessAttack(lastAttackSuccessRow, lastAttackSuccessCol + 1, this.target))
                 {
@@ -358,12 +359,13 @@ namespace BattleSheep.Strategy
                     }
                     else
                     {
-                        Console.WriteLine("masuk -1");
+                        Console.WriteLine("masuk -1 kanan");
                         Console.WriteLine(row + " " + lastAttackSuccessCol);
                     }
                 }
                 else if (Board.AllowAttack(lastAttackSuccessRow, lastAttackSuccessCol + 1, this.target))
                 {
+                    Console.WriteLine("Masuk else if");
                     col = lastAttackSuccessCol + 1;
                     hasAttacked = true;
                 }
@@ -379,13 +381,13 @@ namespace BattleSheep.Strategy
             {
                 if (Board.GetSheep(row, col, this.target).IsDestroyed())
                 {
-                    //Console.WriteLine("Reset");
+                    Console.WriteLine("Reset");
                     lastAttackSuccessCol = -1;
                     lastAttackSuccessRow = -1;
                 }
                 else
                 {
-                    //Console.WriteLine("Diganti");
+                    Console.WriteLine("Diganti");
                     lastAttackSuccessCol = col;
                     lastAttackSuccessRow = row;
                 }

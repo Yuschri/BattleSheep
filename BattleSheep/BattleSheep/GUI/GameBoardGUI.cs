@@ -93,5 +93,13 @@ namespace BattleSheep.GUI
             return this.Controller;
         }
 
+        internal PlayerBoardController GetPlayerBoardController(GameBoardController.PLAYER Player)
+        {
+            if (Player == GameBoardController.PLAYER.PLAYER1)
+                return this.playerboard1.GetController();
+            return this.playerboard2.GetController();
+
+        }
+
     }
 }
