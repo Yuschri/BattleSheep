@@ -42,7 +42,7 @@ namespace BattleSheep.GUI
             if (this.player.GetPlayerType() == GameBoardController.PLAYER.PLAYER1)
                 this.Controller.RenderBoardGUI(true);
             else
-                this.Controller.RenderBoardGUI(true);
+                this.Controller.RenderBoardGUI(false);
         }
 
         private void GenerateButton()

@@ -34,10 +34,11 @@ namespace BattleSheep.Strategy
             {
                 counter++;
                 sCol += 2;
-                if (sCol == 10)
+                System.Console.WriteLine(sCol);
+                if (sCol > 9)
                 {
                     sRow++;
-                    sCol = (byte)((sCol == 10) ? (BackToTop) ? 0 : 1 : (BackToTop) ? 1 : 0);
+                    sCol = (byte)((BackToTop) ? ((sCol == 10) ? 0 : 1) : ((sCol == 10) ? 1 : 0 ));
                 }
                 if (sRow > 9)
                 {
@@ -46,7 +47,7 @@ namespace BattleSheep.Strategy
                     BackToTop = true;
                 }
             }
-
+            //System.Console.WriteLine(sRow + " " + sCol);
             if (counter == 20)
             {
                 base.SetRandomAttack();
@@ -54,6 +55,7 @@ namespace BattleSheep.Strategy
             else
             {
                 Board.SetAttack(sRow, sCol, this.target);
+                
                 int row = sRow;
                 int col = sCol;
                 if (Board.IsSuccessAttack(row, col, this.target))

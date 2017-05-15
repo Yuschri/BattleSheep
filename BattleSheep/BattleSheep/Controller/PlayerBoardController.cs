@@ -80,66 +80,69 @@ namespace BattleSheep.Controller
             int baris = Convert.ToInt32((temp).Name[0]);
             int kolom = Convert.ToInt32((temp).Name[1]);
 
-            if (TempCoord[0] != -1)
+            if (this.Controller.GetGameState() != GameBoardController.STATE.PLAYING)
             {
-                // jika rotasi
-                if (!this.Controller.IsSheepLocation(baris, kolom, GameBoardController.PLAYER.PLAYER1))
+                if (TempCoord[0] != -1)
                 {
-                    if (TempCoord[0] == TempCoord[2])
+                    // jika rotasi
+                    if (!this.Controller.IsSheepLocation(baris, kolom, GameBoardController.PLAYER.PLAYER1))
                     {
-                        for (int i = TempCoord[1]; i <= TempCoord[3]; i++)
+                        if (TempCoord[0] == TempCoord[2])
                         {
-                            this.playerBoard.GetBButton()[TempCoord[2]][i].Image = null;
+                            for (int i = TempCoord[1]; i <= TempCoord[3]; i++)
+                            {
+                                this.playerBoard.GetBButton()[TempCoord[2]][i].Image = null;
+                            }
                         }
-                    }
-                    // jika tidak berotasi
-                    else if (TempCoord[1] == TempCoord[3])
-                    {
-                        //Console.WriteLine(TempCoord[0] + " " + TempCoord[1] + " " + TempCoord[2] + " " + TempCoord[3]);
-                        for (int i = TempCoord[0]; i <= TempCoord[2]; i++)
+                        // jika tidak berotasi
+                        else if (TempCoord[1] == TempCoord[3])
                         {
-                            this.playerBoard.GetBButton()[i][TempCoord[1]].Image = null;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (rotate)
-                {
-                    if (baris + length <= 9)
-                    {
-                        for (int i = baris; i < baris + length; i++)
-                        {
-                            this.playerBoard.GetBButton()[kolom][i].BackColor = Color.FromArgb(230, 230, 240);
-                        }
-                    }
-                    else
-                    {
-                        for (int i = baris; i > baris - length; i--)
-                        {
-                            this.playerBoard.GetBButton()[kolom][i].BackColor = Color.FromArgb(230, 230, 240);
+                            //Console.WriteLine(TempCoord[0] + " " + TempCoord[1] + " " + TempCoord[2] + " " + TempCoord[3]);
+                            for (int i = TempCoord[0]; i <= TempCoord[2]; i++)
+                            {
+                                this.playerBoard.GetBButton()[i][TempCoord[1]].Image = null;
+                            }
                         }
                     }
                 }
                 else
                 {
-                    if (kolom + length <= 9)
+                    if (rotate)
                     {
-                        for (int i = kolom; i < kolom + length; i++)
+                        if (baris + length <= 9)
                         {
-                            this.playerBoard.GetBButton()[i][baris].BackColor = Color.FromArgb(230, 230, 240);
+                            for (int i = baris; i < baris + length; i++)
+                            {
+                                this.playerBoard.GetBButton()[kolom][i].BackColor = Color.FromArgb(230, 230, 240);
+                            }
+                        }
+                        else
+                        {
+                            for (int i = baris; i > baris - length; i--)
+                            {
+                                this.playerBoard.GetBButton()[kolom][i].BackColor = Color.FromArgb(230, 230, 240);
+                            }
                         }
                     }
                     else
                     {
-                        for (int i = kolom; i > kolom - length; i--)
+                        if (kolom + length <= 9)
                         {
-                            this.playerBoard.GetBButton()[i][baris].BackColor = Color.FromArgb(230, 230, 240);
+                            for (int i = kolom; i < kolom + length; i++)
+                            {
+                                this.playerBoard.GetBButton()[i][baris].BackColor = Color.FromArgb(230, 230, 240);
+                            }
+                        }
+                        else
+                        {
+                            for (int i = kolom; i > kolom - length; i--)
+                            {
+                                this.playerBoard.GetBButton()[i][baris].BackColor = Color.FromArgb(230, 230, 240);
+                            }
                         }
                     }
+                    //BButton[kolom][baris].BackColor = Color.FromArgb(230, 230, 240);
                 }
-                //BButton[kolom][baris].BackColor = Color.FromArgb(230, 230, 240);
             }
         }
 
@@ -193,11 +196,33 @@ namespace BattleSheep.Controller
             {
                 if (this.Controller.GetCurrentPlayer() != this.player.GetPlayerType())
                 {
-                    if (!this.Controller.IsSuccessAttack(baris, kolom, GameBoardController.PLAYER.PLAYER2)) {
-                        this.Controller.GetCPUPlayer().SetAttack();
+                    if (!this.Controller.IsSuccessAttack(baris, kolom, GameBoardController.PLAYER.PLAYER2) && this.Controller.AllowAttack(baris,kolom,GameBoardController.PLAYER.PLAYER2)) {
                         this.Controller.SetAttack(baris, kolom, GameBoardController.PLAYER.PLAYER2);
+                        if (this.Controller.HasWinner())
+                        {
+                            System.Windows.Forms.MessageBox.Show("Pemenangnya adalah : " + this.Controller.GetWinner().GetName());
+                        }
+                        if (this.Controller.GetTurn() == GameBoardController.PLAYER.PLAYER2)
+                        {
+                            this.Controller.GetCPUPlayer().SetAttack();
+                            this.RenderBoardGUI(false);
+                            if (this.Controller.HasWinner())
+                            {
+                                System.Windows.Forms.MessageBox.Show("Pemenangnya adalah : " + this.Controller.GetWinner().GetName());
+                            }
+                            while (this.Controller.GetTurn() == GameBoardController.PLAYER.PLAYER2 && !this.Controller.HasWinner())
+                            {
+                                Console.WriteLine("Serang lagi !");
+                                this.Controller.GetCPUPlayer().SetAttack();
+                                this.RenderBoardGUI(false);
+                                if (this.Controller.HasWinner())
+                                {
+                                    System.Windows.Forms.MessageBox.Show("Pemenangnya adalah : " + this.Controller.GetWinner().GetName());
+                                }
+                            }
+                        }
                         this.playerBoard.GetGameBoard().GetPlayerBoardController(GameBoardController.PLAYER.PLAYER1).RenderBoardGUI(true);
-                        this.RenderBoardGUI(true);
+                        this.RenderBoardGUI(false);
                     }
                 }
             }
@@ -362,6 +387,7 @@ namespace BattleSheep.Controller
 
         public void StartGame(object sender, EventArgs args)
         {
+            this.playerBoard.GetStartButton().Enabled = false;
             this.playerBoard.GetResetButton().Enabled = false;
             this.Controller.SetGameState(GameBoardController.STATE.PLAYING);
         }

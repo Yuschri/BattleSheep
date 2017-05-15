@@ -8,7 +8,7 @@ namespace BattleSheep.Strategy
 
         public enum DIFFICULT
         {
-            EASY, MEDIUM, EXPERT
+            EASY, MEDIUM, HARD
         }
 
         public enum WAY
@@ -80,35 +80,35 @@ namespace BattleSheep.Strategy
             }
         }
 
-        public void UseInsteadAI(Strategy AI)
+        public void UseInsteadStrategy(Strategy CPU)
         {
-            if(AI is FromTopAttackStrategy)
+            if(CPU is FromTopAttackStrategy)
             {
-                FromTopAttackStrategy Strategy = (FromTopAttackStrategy) AI;
+                FromTopAttackStrategy Strategy = (FromTopAttackStrategy) CPU;
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
-            else if (AI is FromBottomAttackStrategy)
+            else if (CPU is FromBottomAttackStrategy)
             {
-                FromBottomAttackStrategy Strategy = (FromBottomAttackStrategy) AI;
+                FromBottomAttackStrategy Strategy = (FromBottomAttackStrategy) CPU;
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
-            else if (AI is FromLeftAttackStrategy)
+            else if (CPU is FromLeftAttackStrategy)
             {
-                FromLeftAttackStrategy Strategy = (FromLeftAttackStrategy) AI;
+                FromLeftAttackStrategy Strategy = (FromLeftAttackStrategy) CPU;
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
-            else if (AI is FromRightAttackStrategy)
+            else if (CPU is FromRightAttackStrategy)
             {
-                FromRightAttackStrategy Strategy = (FromRightAttackStrategy) AI;
+                FromRightAttackStrategy Strategy = (FromRightAttackStrategy) CPU;
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
             else
             {
-                OrganizedAttackStrategy Strategy = (OrganizedAttackStrategy) AI;
+                OrganizedAttackStrategy Strategy = (OrganizedAttackStrategy) CPU;
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }

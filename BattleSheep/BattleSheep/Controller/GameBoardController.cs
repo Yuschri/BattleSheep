@@ -27,6 +27,8 @@ namespace BattleSheep.Controller
             PLAYER1, PLAYER2
         }
 
+        private PLAYER turn = PLAYER.PLAYER1;
+
         private PLAYER CurrentPlayer;
 
         private Player Player1;
@@ -57,7 +59,7 @@ namespace BattleSheep.Controller
             Player1.SetPlayerType(PLAYER.PLAYER1);
             Player2.SetPlayerType(PLAYER.PLAYER2);
 
-            this.CPU = new Strategy.Strategy(this,Strategy.Strategy.DIFFICULT.EASY);
+            this.CPU = new Strategy.Strategy(this,Strategy.Strategy.DIFFICULT.MEDIUM);
             this.CPU.SetAISheep(new int[] { 2,2,3,4,5});
         }
 
@@ -259,8 +261,13 @@ namespace BattleSheep.Controller
                 Sheep Domba = this.GetSheep(row, col, Pl.GetPlayerType());
                 Domba.SetAttack();
             }
-            if (!IsSuccessAttack(row, col, Pl.GetPlayerType()))
-                Player2.AddTurn();
+            if (!IsSuccessAttack(row, col, Pl.GetPlayerType())) {
+                Pl.AddTurn();
+                if (this.turn == PLAYER.PLAYER1)
+                    this.turn = PLAYER.PLAYER2;
+                else
+                    this.turn = PLAYER.PLAYER1;
+            }
             //Console.WriteLine("Turn : " + Player2Turn);
         }
 
@@ -306,7 +313,18 @@ namespace BattleSheep.Controller
                     if (Player2.GetSheep()[i].IsDestroyed())
                         Player2DestroyedSheep++;
                 }
+                int Player1DestroyedSheep = 0;
+                for (int i = 0; i < Player2.GetSheep().Count(); i++)
+                {
+                    if (Player1.GetSheep()[i].IsDestroyed())
+                        Player1DestroyedSheep++;
+                }
                 if (Player2DestroyedSheep == Player2.GetSheep().Count())
+                {
+                    Player1.SetAsWinner();
+                    return true;
+                }
+                else if(Player1DestroyedSheep == Player1.GetSheep().Count)
                 {
                     Player2.SetAsWinner();
                     return true;
@@ -398,6 +416,11 @@ namespace BattleSheep.Controller
         public Strategy.Strategy GetCPUPlayer()
         {
             return this.CPU;
+        }
+
+        public PLAYER GetTurn()
+        {
+            return this.turn;
         }
     }
 
