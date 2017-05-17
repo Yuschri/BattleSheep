@@ -59,7 +59,7 @@ namespace BattleSheep.Controller
             Player1.SetPlayerType(PLAYER.PLAYER1);
             Player2.SetPlayerType(PLAYER.PLAYER2);
 
-            this.CPU = new Strategy.Strategy(this,Strategy.Strategy.DIFFICULT.MEDIUM);
+            this.CPU = new Strategy.Strategy(this,Strategy.Strategy.DIFFICULT.HARD);
             this.CPU.SetAISheep(new int[] { 2,2,3,4,5});
         }
 

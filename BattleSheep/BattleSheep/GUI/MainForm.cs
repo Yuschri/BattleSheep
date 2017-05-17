@@ -16,7 +16,6 @@ namespace BattleSheep.GUI
         {
             InitializeComponent();
             this.Controls.Add(new MainMenu(this));
-            
         }
 
         private void MainForm_Load(object sender, EventArgs e)

@@ -41,7 +41,6 @@
             this.Text = "Battle Sheep";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
-
         }
 
         #endregion

@@ -64,13 +64,13 @@ namespace BattleSheep.Strategy
             this.Difficult = Difficult;
             if (Difficult == DIFFICULT.EASY)
             {
-                OrganizedAttackStrategy Strategy = new OrganizedAttackStrategy(Board);
+                RandomAttackStrategy Strategy = new RandomAttackStrategy(Board);
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
             else if(Difficult == DIFFICULT.MEDIUM)
             {
-                FromBottomAttackStrategy Strategy = new FromBottomAttackStrategy(Board);
+                OrganizedAttackStrategy Strategy = new OrganizedAttackStrategy(Board);
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
@@ -103,6 +103,12 @@ namespace BattleSheep.Strategy
             else if (CPU is FromRightAttackStrategy)
             {
                 FromRightAttackStrategy Strategy = (FromRightAttackStrategy) CPU;
+                this.strategy = Strategy;
+                this.Name = Strategy.GetName();
+            }
+            else if (CPU is RandomAttackStrategy)
+            {
+                RandomAttackStrategy Strategy = (RandomAttackStrategy)CPU;
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
@@ -221,6 +227,7 @@ namespace BattleSheep.Strategy
         {
             int col = Rand.Next(0, 10);
             int row = Rand.Next(0, 10);
+            Console.WriteLine(row + " " + col);
 
             // Memastikan blok tersebut belum pernah diserang
             // atau boleh diserang
@@ -234,15 +241,14 @@ namespace BattleSheep.Strategy
                    Board.IsSuccessAttack(row - 1, col + 1, this.target)||
                    Board.IsSuccessAttack(row + 1, col - 1, this.target))
             {
-                col = Rand.Next(0, 10);
-                row = Rand.Next(0, 10);
+                Random newRandom = new Random();
+                col = newRandom.Next(0, 10);
+                row = newRandom.Next(0, 10);
+                Console.WriteLine(row + " " + col);
             }
 
             // Menyerang
             Board.SetAttack(row, col, this.target);
-            int[] history = new int[2];
-            history[0] = row;
-            history[1] = col;
 
             if (Board.IsSuccessAttack(row, col, this.target))
             {
@@ -435,17 +441,33 @@ namespace BattleSheep.Strategy
             this.Difficult = Difficult;
         }
 
-        private void RandomStrategy()
-        {
-
-        }
-
         /**
          * Melakukan
          */
         private void GenerateStrategy()
         {
-
+            int random = this.Rand.Next(1, 4);
+            if (random == 1) {
+                FromTopAttackStrategy Strategy = new FromTopAttackStrategy(this.Board);
+                this.strategy = Strategy;
+                this.Name = Strategy.GetName();
+            }
+            if (random == 2) {
+                FromBottomAttackStrategy Strategy = new FromBottomAttackStrategy(this.Board);
+                this.strategy = Strategy;
+                this.Name = Strategy.GetName();
+            }
+            if (random == 3) {
+                FromTopAttackStrategy Strategy = new FromTopAttackStrategy(this.Board);
+                this.strategy = Strategy;
+                this.Name = Strategy.GetName();
+            }
+            if (random == 4)
+            {
+                FromTopAttackStrategy Strategy = new FromTopAttackStrategy(this.Board);
+                this.strategy = Strategy;
+                this.Name = Strategy.GetName();
+            }
         }
 
         public void SetAttack()
@@ -468,6 +490,11 @@ namespace BattleSheep.Strategy
             else if (this.strategy is FromLeftAttackStrategy)
             {
                 FromLeftAttackStrategy CPU = (FromLeftAttackStrategy)this.strategy;
+                CPU.SetAttack();
+            }
+            else if (this.strategy is RandomAttackStrategy)
+            {
+                RandomAttackStrategy CPU = (RandomAttackStrategy)this.strategy;
                 CPU.SetAttack();
             }
             else 

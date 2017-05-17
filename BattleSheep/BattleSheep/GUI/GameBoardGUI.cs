@@ -8,7 +8,7 @@ namespace BattleSheep.GUI
     public partial class GameBoardGUI : Panel
     {
 
-        Control FControl;
+        private Form parent;
 
         /**
          * Panel untuk membuat dua layout Board bagian kana dan kiri
@@ -35,12 +35,12 @@ namespace BattleSheep.GUI
 
         private GameBoardController Controller;
 
-        public GameBoardGUI(Control Parent)
+        public GameBoardGUI(Form Parent)
         {
             this.Controller = new GameBoardController("Bagas");
             this.Controller.SetGameState(GameBoardController.STATE.PUTSHEEP);
             this.Controller.SetCurrentPlayer(GameBoardController.PLAYER.PLAYER1);
-            FControl = Parent;
+            this.parent = Parent;
             InitializeComponent();
             Init();
         }
@@ -99,6 +99,11 @@ namespace BattleSheep.GUI
                 return this.playerboard1.GetController();
             return this.playerboard2.GetController();
 
+        }
+
+        internal Form GetParent()
+        {
+            return this.parent;
         }
 
     }

@@ -53,6 +53,12 @@
     <Compile Include="GUI\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\FormWinner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FormWinner.Designer.cs">
+      <DependentUpon>FormWinner.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\GameBoardGUI.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -78,6 +84,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FormWinner.resx">
+      <DependentUpon>FormWinner.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\GameBoardGUI.resx">
       <DependentUpon>GameBoardGUI.cs</DependentUpon>
@@ -111,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Object\Player.cs" />
+    <Compile Include="Strategy\RandomAttackStrategy.cs" />
     <Compile Include="Strategy\Strategy.cs" />
     <Compile Include="Strategy\StrategyAttackLogicInterface.cs" />
     <Compile Include="Controller\GameBoardController.cs" />

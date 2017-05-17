@@ -51,7 +51,7 @@ namespace BattleSheep.Strategy
          */
         public string GetName()
         {
-            return "Random Attack AI";
+            return "Organized Attack Strategy";
         }
 
     }

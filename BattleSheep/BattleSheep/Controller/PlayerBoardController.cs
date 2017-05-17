@@ -17,6 +17,8 @@ namespace BattleSheep.Controller
 
         private int SheepCounter = 0;
 
+        private Timer timer = new Timer();
+
         //simpan koordinat hover
         //[0] = colfrom, [1] = rowfrom, [2] = coluntil, [3] = rowuntil
         private int[] TempCoord = new int[4];
@@ -198,31 +200,30 @@ namespace BattleSheep.Controller
                 {
                     if (!this.Controller.IsSuccessAttack(baris, kolom, GameBoardController.PLAYER.PLAYER2) && this.Controller.AllowAttack(baris,kolom,GameBoardController.PLAYER.PLAYER2)) {
                         this.Controller.SetAttack(baris, kolom, GameBoardController.PLAYER.PLAYER2);
+                        this.RenderBoardGUI(false);
                         if (this.Controller.HasWinner())
                         {
-                            System.Windows.Forms.MessageBox.Show("Pemenangnya adalah : " + this.Controller.GetWinner().GetName());
+                            FormWinner FormPemenang = new FormWinner(this.playerBoard.GetGameBoard().GetParent());
+                            FormPemenang.ShowDialog();
                         }
-                        if (this.Controller.GetTurn() == GameBoardController.PLAYER.PLAYER2)
+                        else
                         {
-                            this.Controller.GetCPUPlayer().SetAttack();
-                            this.RenderBoardGUI(false);
-                            if (this.Controller.HasWinner())
+                            if (this.Controller.GetTurn() == GameBoardController.PLAYER.PLAYER2)
                             {
-                                System.Windows.Forms.MessageBox.Show("Pemenangnya adalah : " + this.Controller.GetWinner().GetName());
-                            }
-                            while (this.Controller.GetTurn() == GameBoardController.PLAYER.PLAYER2 && !this.Controller.HasWinner())
-                            {
-                                Console.WriteLine("Serang lagi !");
                                 this.Controller.GetCPUPlayer().SetAttack();
                                 this.RenderBoardGUI(false);
                                 if (this.Controller.HasWinner())
                                 {
-                                    System.Windows.Forms.MessageBox.Show("Pemenangnya adalah : " + this.Controller.GetWinner().GetName());
+                                    FormWinner FormPemenang = new FormWinner(this.playerBoard.GetGameBoard().GetParent());
+                                    FormPemenang.ShowDialog();
                                 }
+                                timer.Enabled = true;
+                                timer.Interval = 750;
+                                timer.Tick += new EventHandler(ParallelAttack);
+                                timer.Start();
                             }
                         }
                         this.playerBoard.GetGameBoard().GetPlayerBoardController(GameBoardController.PLAYER.PLAYER1).RenderBoardGUI(true);
-                        this.RenderBoardGUI(false);
                     }
                 }
             }
@@ -390,6 +391,25 @@ namespace BattleSheep.Controller
             this.playerBoard.GetStartButton().Enabled = false;
             this.playerBoard.GetResetButton().Enabled = false;
             this.Controller.SetGameState(GameBoardController.STATE.PLAYING);
+        }
+
+        private void ParallelAttack(object source, EventArgs e)
+        {
+            Console.WriteLine("Timer !");
+            if (this.Controller.GetTurn() == GameBoardController.PLAYER.PLAYER2 && !this.Controller.HasWinner())
+            {
+                this.Controller.GetCPUPlayer().SetAttack();
+                this.playerBoard.GetGameBoard().GetPlayerBoardController(GameBoardController.PLAYER.PLAYER1).RenderBoardGUI(true);
+                if (this.Controller.HasWinner())
+                {
+                    FormWinner FormPemenang = new FormWinner(this.playerBoard.GetGameBoard().GetParent());
+                    FormPemenang.ShowDialog();
+                }
+            }
+            else
+            {
+                timer.Stop();
+            }
         }
 
     }
