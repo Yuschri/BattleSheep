@@ -46,11 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\Form1.cs">
+    <Compile Include="GUI\InputDifficulty.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="GUI\InputDifficulty.Designer.cs">
+      <DependentUpon>InputDifficulty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\InputNamaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\InputNamaForm.Designer.cs">
+      <DependentUpon>InputNamaForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\GameBoardGUI.cs">
       <SubType>Component</SubType>
@@ -75,8 +81,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="GUI\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\InputDifficulty.resx">
+      <DependentUpon>InputDifficulty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\InputNamaForm.resx">
+      <DependentUpon>InputNamaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\GameBoardGUI.resx">
       <DependentUpon>GameBoardGUI.cs</DependentUpon>

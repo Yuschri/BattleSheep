@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace BattleSheep.GUI
 {
-    public partial class Form1 : Form
+    public partial class InputNamaForm : Form
     {
-        public Form1()
+        public InputNamaForm()
         {
             InitializeComponent();
         }
