@@ -47,10 +47,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GUI\InputDifficulty.cs">
+    <Compile Include="Controller\PlayerBoardController.cs" />
+    <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\InputDifficulty.Designer.cs">
       <DependentUpon>InputDifficulty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\FormWinner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\FormWinner.Designer.cs">
+      <DependentUpon>FormWinner.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\InputNamaForm.cs">
       <SubType>Form</SubType>
@@ -83,6 +91,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\InputDifficulty.resx">
       <DependentUpon>InputDifficulty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\FormWinner.resx">
+      <DependentUpon>FormWinner.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\InputNamaForm.resx">
       <DependentUpon>InputNamaForm.cs</DependentUpon>
@@ -119,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Object\Player.cs" />
+    <Compile Include="Strategy\RandomAttackStrategy.cs" />
     <Compile Include="Strategy\Strategy.cs" />
     <Compile Include="Strategy\StrategyAttackLogicInterface.cs" />
     <Compile Include="Controller\GameBoardController.cs" />

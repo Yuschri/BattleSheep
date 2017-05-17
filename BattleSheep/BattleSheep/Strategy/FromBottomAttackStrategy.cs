@@ -10,7 +10,7 @@ namespace BattleSheep.Strategy
 
         private byte sCol = 0;
 
-        private bool BackToBottom;
+        private bool BackToBottom = false;
 
         public FromBottomAttackStrategy(GameBoardController Board) : base(Board)
         {
@@ -33,10 +33,10 @@ namespace BattleSheep.Strategy
             {
                 counter++;
                 sCol += 2;
-                if (sCol == 10)
+                if (sCol > 9)
                 {
                     sRow--;
-                    sCol = (byte)((BackToBottom) ? (sCol == 10) ? 0 : 1 : (sCol == 11) ? 1 : 0 );
+                    sCol = (byte)((BackToBottom) ? ((sCol == 10) ? 0 : 1) : ((sCol == 10) ? 1 : 0));
                 }
                 if (sRow < 0)
                 {

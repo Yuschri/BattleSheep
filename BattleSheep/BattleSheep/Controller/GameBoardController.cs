@@ -2,20 +2,40 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleSheep.Object;
+using BattleSheep.Strategy;
 
 namespace BattleSheep.Controller
 {
     class GameBoardController
     {
 
+        /**
+         * Daftar Status pada GameBoard
+         */
+        public enum STATE
+        {
+            CONFIRMPLAYING, PLAYING, PUTSHEEP
+        }
+
+        /**
+         * Status dari GameBoard
+         */
+        public STATE Status;
+
         public enum PLAYER
         {
             PLAYER1, PLAYER2
         }
 
+        private PLAYER turn = PLAYER.PLAYER1;
+
+        private PLAYER CurrentPlayer;
+
         private Player Player1;
 
         private Player Player2;
+
+        private Strategy.Strategy CPU;
 
         /**
          * Melakukan inisialisasi GameBoard dengan syrata memasukkan
@@ -36,6 +56,11 @@ namespace BattleSheep.Controller
             Player1 = new Player(Player1Name);
             Player2 = new Player("CPU");
             Player2.IsCPU(true);
+            Player1.SetPlayerType(PLAYER.PLAYER1);
+            Player2.SetPlayerType(PLAYER.PLAYER2);
+
+            this.CPU = new Strategy.Strategy(this,Strategy.Strategy.DIFFICULT.HARD);
+            this.CPU.SetAISheep(new int[] { 2,2,3,4,5});
         }
 
         /**
@@ -88,7 +113,6 @@ namespace BattleSheep.Controller
             Player Pl = (Player == PLAYER.PLAYER1) ? Player1 : Player2;
             Pl.SetSheepMap(new char[10, 10]);
             Pl.SetSheep(new List<Sheep>());
-            Console.WriteLine(Pl.GetName());
         }
 
         /**
@@ -234,11 +258,16 @@ namespace BattleSheep.Controller
             //Player2Turn++;
             if (Pl.GetSheepMap()[row, col] == 'X')
             {
-                Sheep Domba = this.GetSheep(row, col, PLAYER.PLAYER2);
+                Sheep Domba = this.GetSheep(row, col, Pl.GetPlayerType());
                 Domba.SetAttack();
             }
-            if (!IsSuccessAttack(row, col, PLAYER.PLAYER2))
-                Player2.AddTurn();
+            if (!IsSuccessAttack(row, col, Pl.GetPlayerType())) {
+                Pl.AddTurn();
+                if (this.turn == PLAYER.PLAYER1)
+                    this.turn = PLAYER.PLAYER2;
+                else
+                    this.turn = PLAYER.PLAYER1;
+            }
             //Console.WriteLine("Turn : " + Player2Turn);
         }
 
@@ -284,7 +313,18 @@ namespace BattleSheep.Controller
                     if (Player2.GetSheep()[i].IsDestroyed())
                         Player2DestroyedSheep++;
                 }
+                int Player1DestroyedSheep = 0;
+                for (int i = 0; i < Player2.GetSheep().Count(); i++)
+                {
+                    if (Player1.GetSheep()[i].IsDestroyed())
+                        Player1DestroyedSheep++;
+                }
                 if (Player2DestroyedSheep == Player2.GetSheep().Count())
+                {
+                    Player1.SetAsWinner();
+                    return true;
+                }
+                else if(Player1DestroyedSheep == Player1.GetSheep().Count)
                 {
                     Player2.SetAsWinner();
                     return true;
@@ -350,6 +390,38 @@ namespace BattleSheep.Controller
             return (Player == PLAYER.PLAYER1) ? Player1 : Player2;
         }
 
+        /**
+         * Mengatur Status Game
+         */
+        public void SetGameState(STATE Status)
+        {
+            this.Status = Status;
+        }
+
+        public STATE GetGameState()
+        {
+            return this.Status;
+        }
+
+        public void SetCurrentPlayer(PLAYER CurrentPlayer)
+        {
+            this.CurrentPlayer = CurrentPlayer;
+        }
+
+        public PLAYER GetCurrentPlayer()
+        {
+            return this.CurrentPlayer;
+        }
+
+        public Strategy.Strategy GetCPUPlayer()
+        {
+            return this.CPU;
+        }
+
+        public PLAYER GetTurn()
+        {
+            return this.turn;
+        }
     }
 
 }

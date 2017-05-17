@@ -8,7 +8,7 @@ namespace BattleSheep.Strategy
 
         public enum DIFFICULT
         {
-            EASY, MEDIUM, EXPERT
+            EASY, MEDIUM, HARD
         }
 
         public enum WAY
@@ -29,7 +29,7 @@ namespace BattleSheep.Strategy
 
         protected int lastAttackSuccessCol = -1;
 
-        protected GameBoardController.PLAYER target = GameBoardController.PLAYER.PLAYER2;
+        protected GameBoardController.PLAYER target = GameBoardController.PLAYER.PLAYER1;
 
         /**
          * Jenis difficult
@@ -64,13 +64,13 @@ namespace BattleSheep.Strategy
             this.Difficult = Difficult;
             if (Difficult == DIFFICULT.EASY)
             {
-                OrganizedAttackStrategy Strategy = new OrganizedAttackStrategy(Board);
+                RandomAttackStrategy Strategy = new RandomAttackStrategy(Board);
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
             else if(Difficult == DIFFICULT.MEDIUM)
             {
-                FromBottomAttackStrategy Strategy = new FromBottomAttackStrategy(Board);
+                OrganizedAttackStrategy Strategy = new OrganizedAttackStrategy(Board);
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
@@ -80,35 +80,41 @@ namespace BattleSheep.Strategy
             }
         }
 
-        public void UseInsteadAI(Strategy AI)
+        public void UseInsteadStrategy(Strategy CPU)
         {
-            if(AI is FromTopAttackStrategy)
+            if(CPU is FromTopAttackStrategy)
             {
-                FromTopAttackStrategy Strategy = (FromTopAttackStrategy) AI;
+                FromTopAttackStrategy Strategy = (FromTopAttackStrategy) CPU;
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
-            else if (AI is FromBottomAttackStrategy)
+            else if (CPU is FromBottomAttackStrategy)
             {
-                FromBottomAttackStrategy Strategy = (FromBottomAttackStrategy) AI;
+                FromBottomAttackStrategy Strategy = (FromBottomAttackStrategy) CPU;
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
-            else if (AI is FromLeftAttackStrategy)
+            else if (CPU is FromLeftAttackStrategy)
             {
-                FromLeftAttackStrategy Strategy = (FromLeftAttackStrategy) AI;
+                FromLeftAttackStrategy Strategy = (FromLeftAttackStrategy) CPU;
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
-            else if (AI is FromRightAttackStrategy)
+            else if (CPU is FromRightAttackStrategy)
             {
-                FromRightAttackStrategy Strategy = (FromRightAttackStrategy) AI;
+                FromRightAttackStrategy Strategy = (FromRightAttackStrategy) CPU;
+                this.strategy = Strategy;
+                this.Name = Strategy.GetName();
+            }
+            else if (CPU is RandomAttackStrategy)
+            {
+                RandomAttackStrategy Strategy = (RandomAttackStrategy)CPU;
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
             else
             {
-                OrganizedAttackStrategy Strategy = (OrganizedAttackStrategy) AI;
+                OrganizedAttackStrategy Strategy = (OrganizedAttackStrategy) CPU;
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
@@ -159,7 +165,7 @@ namespace BattleSheep.Strategy
             // Variabel counter berfungsi untuk mencegah adanya
             // infinite loop
             int counter = 1;
-            const int limitLoop = 20;
+            const int limitLoop = 50;
             while(!Board.ConfirmPlayerSheepLocation(
                 ColFrom,
                 RowFrom,
@@ -200,7 +206,7 @@ namespace BattleSheep.Strategy
                     RowFrom,
                     ColUntil,
                     RowUntil,
-                    this.target
+                    GameBoardController.PLAYER.PLAYER2
                     );
             }
                 
@@ -221,6 +227,7 @@ namespace BattleSheep.Strategy
         {
             int col = Rand.Next(0, 10);
             int row = Rand.Next(0, 10);
+            Console.WriteLine(row + " " + col);
 
             // Memastikan blok tersebut belum pernah diserang
             // atau boleh diserang
@@ -234,15 +241,14 @@ namespace BattleSheep.Strategy
                    Board.IsSuccessAttack(row - 1, col + 1, this.target)||
                    Board.IsSuccessAttack(row + 1, col - 1, this.target))
             {
-                col = Rand.Next(0, 10);
-                row = Rand.Next(0, 10);
+                Random newRandom = new Random();
+                col = newRandom.Next(0, 10);
+                row = newRandom.Next(0, 10);
+                Console.WriteLine(row + " " + col);
             }
 
             // Menyerang
             Board.SetAttack(row, col, this.target);
-            int[] history = new int[2];
-            history[0] = row;
-            history[1] = col;
 
             if (Board.IsSuccessAttack(row, col, this.target))
             {
@@ -348,6 +354,7 @@ namespace BattleSheep.Strategy
             }
             if (right && !hasAttacked)
             {
+                Console.WriteLine("Masuk Kanan");
                 row = lastAttackSuccessRow;
                 if (Board.IsSuccessAttack(lastAttackSuccessRow, lastAttackSuccessCol + 1, this.target))
                 {
@@ -358,12 +365,13 @@ namespace BattleSheep.Strategy
                     }
                     else
                     {
-                        Console.WriteLine("masuk -1");
+                        Console.WriteLine("masuk -1 kanan");
                         Console.WriteLine(row + " " + lastAttackSuccessCol);
                     }
                 }
                 else if (Board.AllowAttack(lastAttackSuccessRow, lastAttackSuccessCol + 1, this.target))
                 {
+                    Console.WriteLine("Masuk else if");
                     col = lastAttackSuccessCol + 1;
                     hasAttacked = true;
                 }
@@ -379,13 +387,13 @@ namespace BattleSheep.Strategy
             {
                 if (Board.GetSheep(row, col, this.target).IsDestroyed())
                 {
-                    //Console.WriteLine("Reset");
+                    Console.WriteLine("Reset");
                     lastAttackSuccessCol = -1;
                     lastAttackSuccessRow = -1;
                 }
                 else
                 {
-                    //Console.WriteLine("Diganti");
+                    Console.WriteLine("Diganti");
                     lastAttackSuccessCol = col;
                     lastAttackSuccessRow = row;
                 }
@@ -433,17 +441,33 @@ namespace BattleSheep.Strategy
             this.Difficult = Difficult;
         }
 
-        private void RandomStrategy()
-        {
-
-        }
-
         /**
          * Melakukan
          */
         private void GenerateStrategy()
         {
-
+            int random = this.Rand.Next(1, 4);
+            if (random == 1) {
+                FromTopAttackStrategy Strategy = new FromTopAttackStrategy(this.Board);
+                this.strategy = Strategy;
+                this.Name = Strategy.GetName();
+            }
+            if (random == 2) {
+                FromBottomAttackStrategy Strategy = new FromBottomAttackStrategy(this.Board);
+                this.strategy = Strategy;
+                this.Name = Strategy.GetName();
+            }
+            if (random == 3) {
+                FromTopAttackStrategy Strategy = new FromTopAttackStrategy(this.Board);
+                this.strategy = Strategy;
+                this.Name = Strategy.GetName();
+            }
+            if (random == 4)
+            {
+                FromTopAttackStrategy Strategy = new FromTopAttackStrategy(this.Board);
+                this.strategy = Strategy;
+                this.Name = Strategy.GetName();
+            }
         }
 
         public void SetAttack()
@@ -466,6 +490,11 @@ namespace BattleSheep.Strategy
             else if (this.strategy is FromLeftAttackStrategy)
             {
                 FromLeftAttackStrategy CPU = (FromLeftAttackStrategy)this.strategy;
+                CPU.SetAttack();
+            }
+            else if (this.strategy is RandomAttackStrategy)
+            {
+                RandomAttackStrategy CPU = (RandomAttackStrategy)this.strategy;
                 CPU.SetAttack();
             }
             else 

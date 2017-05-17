@@ -14,20 +14,20 @@ namespace BattleSheep.GUI
     {
         public GameBoardGUI papan;
 
-        Control FControl;
+        private Form parent;
 
-        public MainMenu(Control Parent)
+        public MainMenu(Form Parent)
         {
-            FControl = Parent;
-            papan = new GameBoardGUI(FControl);
+            this.parent = Parent;
             InitializeComponent();
         }
 
         private void play_Click(object sender, EventArgs e)
         {
-            FControl.Controls.RemoveAt(0);
-            FControl.Size = new Size(760, 550);
-            FControl.Controls.Add(papan);
+            papan = new GameBoardGUI(parent);
+            parent.Controls.RemoveAt(0);
+            parent.Size = new Size(760, 550);
+            parent.Controls.Add(papan);
         }
     }
 }

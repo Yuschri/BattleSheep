@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BattleSheep.Controller;
 
 namespace BattleSheep.Object
 {
@@ -19,6 +20,8 @@ namespace BattleSheep.Object
          * Jumlah turn
          */
         private int Turn = 0;
+
+        private GameBoardController.PLAYER PlayerType;
 
         private bool CPU = false;
 
@@ -51,6 +54,19 @@ namespace BattleSheep.Object
         public string GetName()
         {
             return Name;
+        }
+
+        /**
+         * Mengatur jenis pemain
+         */
+        public void SetPlayerType(GameBoardController.PLAYER PlayerType)
+        {
+            this.PlayerType = PlayerType;
+        }
+
+        public GameBoardController.PLAYER GetPlayerType()
+        {
+            return this.PlayerType;
         }
 
         /**
