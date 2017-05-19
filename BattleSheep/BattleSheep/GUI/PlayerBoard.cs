@@ -60,8 +60,8 @@ namespace BattleSheep.GUI
                     K.Margin = new Padding(0);
                     K.FlatStyle = FlatStyle.Flat;
                     K.FlatAppearance.BorderSize = 1;
-                    K.FlatAppearance.BorderColor = Color.FromArgb(125, 125, 125);
-                    K.BackColor = Color.FromArgb(230, 230, 240);
+                    K.FlatAppearance.BorderColor = Color.FromArgb(75, 75, 75);
+                    K.BackColor = Color.Transparent;//FromArgb(230, 230, 240)
                     K.TextAlign = ContentAlignment.MiddleCenter;
                     K.MouseEnter += K_MouseEnter;
                     K.MouseLeave += K_MouseLeave;

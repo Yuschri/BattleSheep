@@ -50,10 +50,11 @@ namespace BattleSheep.GUI
             this.back.Name = "back";
             //this.back.Size = new Size(50,30);
             this.back.Text = "Kembali";
+            this.back.BackColor = Color.FromArgb(230, 230, 240);
             this.back.Margin = new Padding(12);
             this.back.FlatStyle = FlatStyle.Flat;
             this.back.Click += Back_Click;
-            //this.PanelAtas.BackColor = Color.Azure;
+            this.PanelAtas.BackColor = Color.Transparent;
             this.PanelAtas.Size = new Size(740, 50);
             this.PanelAtas.Controls.Add(back);
             this.Controls.Add(PanelAtas);
@@ -84,8 +85,10 @@ namespace BattleSheep.GUI
             this.PlayerBoardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             this.PlayerBoardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             this.PlayerBoardPanel.RowStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            this.PlayerBoardPanel.BackColor = Color.Transparent;
             this.PanelAtasProperty();
             this.GeneratePlayerBoard();
+            this.BackgroundImage = global::BattleSheep.Properties.Resources.GrassField;
         }
 
         internal GameBoardController GetController()

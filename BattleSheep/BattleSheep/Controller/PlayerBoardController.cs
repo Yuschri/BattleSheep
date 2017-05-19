@@ -115,14 +115,14 @@ namespace BattleSheep.Controller
                         {
                             for (int i = baris; i < baris + length; i++)
                             {
-                                this.playerBoard.GetBButton()[kolom][i].BackColor = Color.FromArgb(230, 230, 240);
+                                this.playerBoard.GetBButton()[kolom][i].BackColor = Color.Transparent;//FromArgb(230, 230, 240)
                             }
                         }
                         else
                         {
                             for (int i = baris; i > baris - length; i--)
                             {
-                                this.playerBoard.GetBButton()[kolom][i].BackColor = Color.FromArgb(230, 230, 240);
+                                this.playerBoard.GetBButton()[kolom][i].BackColor = Color.Transparent;//FromArgb(230, 230, 240)
                             }
                         }
                     }
@@ -132,14 +132,14 @@ namespace BattleSheep.Controller
                         {
                             for (int i = kolom; i < kolom + length; i++)
                             {
-                                this.playerBoard.GetBButton()[i][baris].BackColor = Color.FromArgb(230, 230, 240);
+                                this.playerBoard.GetBButton()[i][baris].BackColor = Color.Transparent;//FromArgb(230, 230, 240)
                             }
                         }
                         else
                         {
                             for (int i = kolom; i > kolom - length; i--)
                             {
-                                this.playerBoard.GetBButton()[i][baris].BackColor = Color.FromArgb(230, 230, 240);
+                                this.playerBoard.GetBButton()[i][baris].BackColor = Color.Transparent;//FromArgb(230, 230, 240)
                             }
                         }
                     }
