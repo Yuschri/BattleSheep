@@ -53,6 +53,7 @@
             this.buttonEasy.TabIndex = 1;
             this.buttonEasy.Text = "Easy";
             this.buttonEasy.UseVisualStyleBackColor = true;
+            this.buttonEasy.Click += new System.EventHandler(this.setEasy);
             // 
             // buttonMedium
             // 
@@ -63,6 +64,7 @@
             this.buttonMedium.TabIndex = 2;
             this.buttonMedium.Text = "Medium";
             this.buttonMedium.UseVisualStyleBackColor = true;
+            this.buttonMedium.Click += new System.EventHandler(this.setMedium);
             // 
             // buttonHard
             // 
@@ -73,6 +75,7 @@
             this.buttonHard.TabIndex = 3;
             this.buttonHard.Text = "Hard";
             this.buttonHard.UseVisualStyleBackColor = true;
+            this.buttonHard.Click += new System.EventHandler(this.setHard);
             // 
             // InputDifficulty
             // 
@@ -86,6 +89,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "InputDifficulty";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "InputDifficulty";
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -35,9 +35,9 @@ namespace BattleSheep.GUI
 
         private GameBoardController Controller;
 
-        public GameBoardGUI(Form Parent)
+        internal GameBoardGUI(Form Parent,string nama, Strategy.Strategy.DIFFICULT difficult)
         {
-            this.Controller = new GameBoardController("Bagas");
+            this.Controller = new GameBoardController(nama,difficult);
             this.Controller.SetGameState(GameBoardController.STATE.PUTSHEEP);
             this.Controller.SetCurrentPlayer(GameBoardController.PLAYER.PLAYER1);
             this.parent = Parent;
@@ -98,7 +98,6 @@ namespace BattleSheep.GUI
             if (Player == GameBoardController.PLAYER.PLAYER1)
                 return this.playerboard1.GetController();
             return this.playerboard2.GetController();
-
         }
 
         internal Form GetParent()

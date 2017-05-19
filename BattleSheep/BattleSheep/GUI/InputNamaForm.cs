@@ -1,20 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BattleSheep.Controller;
 using System.Windows.Forms;
 
 namespace BattleSheep.GUI
 {
     public partial class InputNamaForm : Form
     {
-        public InputNamaForm()
+
+        private InputNamaController controller;
+
+        private Form mainmenu;
+
+        public InputNamaForm(Form mainmenu)
         {
+            this.mainmenu = mainmenu;
+            this.controller = new InputNamaController(this,this.mainmenu);
             InitializeComponent();
+        }
+
+        private void InputDifficulty(object sender, System.EventArgs e)
+        {
+            this.controller.InputDifficulty();
         }
     }
 }

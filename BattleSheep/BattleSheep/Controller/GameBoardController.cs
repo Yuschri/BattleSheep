@@ -51,7 +51,7 @@ namespace BattleSheep.Controller
          * Jika player 2 adalah CPU, maka cukup menggunakan konstruktor
          * dengan satu parameter
          */
-        public GameBoardController(string Player1Name)
+        public GameBoardController(string Player1Name,Strategy.Strategy.DIFFICULT difficult)
         {
             Player1 = new Player(Player1Name);
             Player2 = new Player("CPU");
@@ -59,7 +59,7 @@ namespace BattleSheep.Controller
             Player1.SetPlayerType(PLAYER.PLAYER1);
             Player2.SetPlayerType(PLAYER.PLAYER2);
 
-            this.CPU = new Strategy.Strategy(this,Strategy.Strategy.DIFFICULT.HARD);
+            this.CPU = new Strategy.Strategy(this,difficult);
             this.CPU.SetAISheep(new int[] { 2,2,3,4,5});
         }
 

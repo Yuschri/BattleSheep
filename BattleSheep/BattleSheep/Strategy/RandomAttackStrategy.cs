@@ -36,7 +36,7 @@ namespace BattleSheep.Strategy
         /**
          * Melakukan serangan tergantung dari tiap AI
          */
-        public void SetAttack() {
+        public new void SetAttack() {
             this.SetLogicAttack();
         }
 
