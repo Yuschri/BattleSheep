@@ -35,6 +35,7 @@
             // 
             // buttonLanjut
             // 
+            this.buttonLanjut.Enabled = false;
             this.buttonLanjut.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.buttonLanjut.Location = new System.Drawing.Point(95, 127);
             this.buttonLanjut.Name = "buttonLanjut";
@@ -61,6 +62,8 @@
             this.nama.Name = "nama";
             this.nama.Size = new System.Drawing.Size(206, 26);
             this.nama.TabIndex = 2;
+            this.nama.TextChanged += new System.EventHandler(this.CekNama);
+            this.nama.KeyUp += new System.Windows.Forms.KeyEventHandler(this.CekNama);
             // 
             // InputNamaForm
             // 

@@ -21,5 +21,20 @@ namespace BattleSheep.GUI
         {
             this.controller.InputDifficulty();
         }
+
+        private void CekNama(object sender, System.EventArgs e)
+        {
+            TextBox nama = (TextBox)sender;
+            if (nama.Text != "")
+                this.buttonLanjut.Enabled = true;
+            else
+                this.buttonLanjut.Enabled = false;
+        }
+
+        private void CekNama(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == 13 && this.nama.Text != "")
+                this.controller.InputDifficulty();
+        }
     }
 }

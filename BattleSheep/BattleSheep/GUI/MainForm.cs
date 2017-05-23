@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace BattleSheep.GUI
 {
     public partial class MainForm : Form
     {
+
+        public static Size size = new Size(284,400);
+
         public MainForm()
         {
             InitializeComponent();

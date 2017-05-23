@@ -38,11 +38,8 @@ namespace BattleSheep.Controller
         {
                 for (int i = 0; i < 10; i++)
                 {
-                    //Console.Write(i + " ");
                     for (int j = 0; j < 10; j++)
                     {
-                        //if (j == 0)
-                        //{
                         if (this.Controller.GetPlayer(this.player.GetPlayerType()).GetSheepMap()[i, j] == 'X')
                         {
                             //render domba
@@ -59,21 +56,26 @@ namespace BattleSheep.Controller
                         {
                             if (this.Controller.GetPlayer(this.player.GetPlayerType()).GetSheepMap()[i, j] == 'X')
                             {
-                                //render jika domba kena serangan
                                 this.playerBoard.GetBButton()[j][i].Image = global::BattleSheep.Properties.Resources.sheep2hit;
                             }
                             else
                             {
-                                //BButton[j][i].Image = global::BattleSheep.Properties.Resources.sheep1;
                                 this.playerBoard.GetBButton()[j][i].BackColor = Color.FromArgb(0, 0, 0);
                             }
-                            //Console.Write(this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1).GetAttacked()[i, j] + " | ");
                         }
-
-                        //Console.Write(this.Controller.GetPlayer(GameBoardController.PLAYER.PLAYER1).GetAttacked()[i, j] + " | ");
-                        //}
+                    else
+                    {
+                        this.playerBoard.GetBButton()[j][i].BackColor = Color.FromArgb(255,255,255);
                     }
                 }
+                }
+        }
+
+        internal void ResetGame()
+        {
+            this.playerBoard.GetRotateButton().Enabled = true;
+            this.playerBoard.GetResetButton().Enabled = false;
+            this.SheepCounter = 0;
         }
 
         public void MouseLeave(Button temp)
@@ -99,7 +101,6 @@ namespace BattleSheep.Controller
                         // jika tidak berotasi
                         else if (TempCoord[1] == TempCoord[3])
                         {
-                            //Console.WriteLine(TempCoord[0] + " " + TempCoord[1] + " " + TempCoord[2] + " " + TempCoord[3]);
                             for (int i = TempCoord[0]; i <= TempCoord[2]; i++)
                             {
                                 this.playerBoard.GetBButton()[i][TempCoord[1]].Image = null;
@@ -203,7 +204,11 @@ namespace BattleSheep.Controller
                         this.RenderBoardGUI(false);
                         if (this.Controller.HasWinner())
                         {
-                            FormWinner FormPemenang = new FormWinner(this.playerBoard.GetGameBoard().GetParent());
+                            FormWinner FormPemenang = new FormWinner(this.playerBoard.GetGameBoard());
+                            if(this.Controller.GetWinner().GetPlayerType() == GameBoardController.PLAYER.PLAYER1)
+                                FormPemenang.setInfo("Anda Menang !");
+                            else
+                                FormPemenang.setInfo("Anda Kalah !");
                             FormPemenang.ShowDialog();
                         }
                         else
@@ -212,11 +217,6 @@ namespace BattleSheep.Controller
                             {
                                 this.Controller.GetCPUPlayer().SetAttack();
                                 this.RenderBoardGUI(false);
-                                if (this.Controller.HasWinner())
-                                {
-                                    FormWinner FormPemenang = new FormWinner(this.playerBoard.GetGameBoard().GetParent());
-                                    FormPemenang.ShowDialog();
-                                }
                                 timer.Enabled = true;
                                 timer.Interval = 750;
                                 timer.Tick += new EventHandler(ParallelAttack);
@@ -395,14 +395,17 @@ namespace BattleSheep.Controller
 
         private void ParallelAttack(object source, EventArgs e)
         {
-            Console.WriteLine("Timer !");
             if (this.Controller.GetTurn() == GameBoardController.PLAYER.PLAYER2 && !this.Controller.HasWinner())
             {
                 this.Controller.GetCPUPlayer().SetAttack();
                 this.playerBoard.GetGameBoard().GetPlayerBoardController(GameBoardController.PLAYER.PLAYER1).RenderBoardGUI(true);
                 if (this.Controller.HasWinner())
                 {
-                    FormWinner FormPemenang = new FormWinner(this.playerBoard.GetGameBoard().GetParent());
+                    FormWinner FormPemenang = new FormWinner(this.playerBoard.GetGameBoard());
+                    if (this.Controller.GetWinner().GetPlayerType() == GameBoardController.PLAYER.PLAYER1)
+                        FormPemenang.setInfo("Anda Menang !");
+                    else
+                        FormPemenang.setInfo("Anda Kalah !");
                     FormPemenang.ShowDialog();
                 }
             }

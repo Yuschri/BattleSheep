@@ -458,13 +458,13 @@ namespace BattleSheep.Strategy
                 this.Name = Strategy.GetName();
             }
             if (random == 3) {
-                FromTopAttackStrategy Strategy = new FromTopAttackStrategy(this.Board);
+                FromLeftAttackStrategy Strategy = new FromLeftAttackStrategy(this.Board);
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }
             if (random == 4)
             {
-                FromTopAttackStrategy Strategy = new FromTopAttackStrategy(this.Board);
+                FromRightAttackStrategy Strategy = new FromRightAttackStrategy(this.Board);
                 this.strategy = Strategy;
                 this.Name = Strategy.GetName();
             }

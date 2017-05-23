@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleSheep.Object;
-using BattleSheep.Strategy;
+using BattleSheep.GUI;
 
 namespace BattleSheep.Controller
 {
@@ -37,6 +37,8 @@ namespace BattleSheep.Controller
 
         private Strategy.Strategy CPU;
 
+        private Strategy.Strategy.DIFFICULT difficult;
+
         /**
          * Melakukan inisialisasi GameBoard dengan syrata memasukkan
          * nama kedua player
@@ -59,6 +61,7 @@ namespace BattleSheep.Controller
             Player1.SetPlayerType(PLAYER.PLAYER1);
             Player2.SetPlayerType(PLAYER.PLAYER2);
 
+            this.difficult = difficult;
             this.CPU = new Strategy.Strategy(this,difficult);
             this.CPU.SetAISheep(new int[] { 2,2,3,4,5});
         }
@@ -421,6 +424,26 @@ namespace BattleSheep.Controller
         public PLAYER GetTurn()
         {
             return this.turn;
+        }
+
+        public void BackToMenu(GameBoardGUI gameboard)
+        {
+            gameboard.GetParent().Controls.RemoveAt(0);
+            gameboard.GetParent().Controls.Add(new MainMenu(gameboard.GetParent()));
+            gameboard.GetParent().Size = MainForm.size;
+        }
+
+        public void ResetGame()
+        {
+            this.ResetSheep(PLAYER.PLAYER1);
+            this.ResetSheep(PLAYER.PLAYER2);
+            this.ResetAttack(PLAYER.PLAYER1);
+            this.ResetAttack(PLAYER.PLAYER2);
+        }
+
+        public Strategy.Strategy.DIFFICULT GetDifficult()
+        {
+            return this.difficult;
         }
     }
 

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BattleSheep.GUI
@@ -15,23 +8,37 @@ namespace BattleSheep.GUI
 
         private Form parent;
 
-        public FormWinner(Form Parent)
+        private GameBoardGUI gameboard;
+
+        public FormWinner(GameBoardGUI gameboard)
         {
-            this.parent = Parent;
+            this.parent = gameboard.GetParent();
+            this.gameboard = gameboard;
             InitializeComponent();
         }
 
         private void PlayAgain(object sender, EventArgs e)
         {
-
+            this.gameboard.GetController().ResetGame();
+            this.gameboard.GetController().SetGameState(Controller.GameBoardController.STATE.PUTSHEEP);
+            this.gameboard.GetPlayerBoardController(Controller.GameBoardController.PLAYER.PLAYER1).RenderBoardGUI(true);
+            this.gameboard.GetPlayerBoardController(Controller.GameBoardController.PLAYER.PLAYER2).RenderBoardGUI(false);
+            this.gameboard.GetPlayerBoardController(Controller.GameBoardController.PLAYER.PLAYER1).ResetGame();
+            this.Close();
         }
 
         private void BackToMenu(object sender, EventArgs e)
         {
             this.Close();
             this.parent.Controls.Clear();
-            this.parent.Size = new Size(300, 370);
+            this.parent.Size = MainForm.size;
             this.parent.Controls.Add(new MainMenu(this.parent));
         }
+
+        public void setInfo(string info)
+        {
+            this.menang.Text = info;
+        }
+
     }
 }

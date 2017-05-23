@@ -11,7 +11,7 @@ namespace BattleSheep.GUI
         private Form parent;
 
         /**
-         * Panel untuk membuat dua layout Board bagian kana dan kiri
+         * Panel untuk membuat dua layout Board bagian kanan dan kiri
          */
         private TableLayoutPanel PlayerBoardPanel = new TableLayoutPanel();
 
@@ -62,7 +62,7 @@ namespace BattleSheep.GUI
 
         private void Back_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            this.Controller.BackToMenu(this);
         }
 
         private void GeneratePlayerBoard()
@@ -85,10 +85,10 @@ namespace BattleSheep.GUI
             this.PlayerBoardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             this.PlayerBoardPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             this.PlayerBoardPanel.RowStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            this.BackgroundImage = global::BattleSheep.Properties.Resources.GrassField;
             this.PlayerBoardPanel.BackColor = Color.Transparent;
             this.PanelAtasProperty();
             this.GeneratePlayerBoard();
-            this.BackgroundImage = global::BattleSheep.Properties.Resources.GrassField;
         }
 
         internal GameBoardController GetController()

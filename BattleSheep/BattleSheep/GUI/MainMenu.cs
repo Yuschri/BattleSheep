@@ -1,7 +1,6 @@
 ﻿using System;
 using BattleSheep.Controller;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace BattleSheep.GUI
 {
