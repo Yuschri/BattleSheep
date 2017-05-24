@@ -175,6 +175,7 @@ namespace BattleSheep.Object
             this.Turn = 0;
             this.Sheep = new List<Sheep>();
             this.AttackedSheepMap = new char[10, 10];
+            this.SheepMap = new char[10, 10];
             this.SetAsLose();
         }
 

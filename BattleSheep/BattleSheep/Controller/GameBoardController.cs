@@ -302,13 +302,6 @@ namespace BattleSheep.Controller
          */
         public bool HasWinner()
         {
-            // Jika jumlah putaran player kurang dari 12 putaran
-            // artinya, tidak mungkin dalam jumlah putaran tersebut
-            // ada pemain yang bisa menang. IMPOSSIBLE !!
-            if (Player2.GetTurn() < 12)
-                return false;
-            else
-            {
                 // Mengecek jumlah kapal yang hancur pada player 2
                 int Player2DestroyedSheep = 0;
                 for (int i = 0; i < Player2.GetSheep().Count(); i++)
@@ -317,7 +310,7 @@ namespace BattleSheep.Controller
                         Player2DestroyedSheep++;
                 }
                 int Player1DestroyedSheep = 0;
-                for (int i = 0; i < Player2.GetSheep().Count(); i++)
+                for (int i = 0; i < Player1.GetSheep().Count(); i++)
                 {
                     if (Player1.GetSheep()[i].IsDestroyed())
                         Player1DestroyedSheep++;
@@ -332,7 +325,6 @@ namespace BattleSheep.Controller
                     Player2.SetAsWinner();
                     return true;
                 }
-            }
             return false;
         }
 
@@ -435,10 +427,11 @@ namespace BattleSheep.Controller
 
         public void ResetGame()
         {
-            this.ResetSheep(PLAYER.PLAYER1);
-            this.ResetSheep(PLAYER.PLAYER2);
-            this.ResetAttack(PLAYER.PLAYER1);
-            this.ResetAttack(PLAYER.PLAYER2);
+            this.Player1.Reset();
+            this.Player2.Reset();
+
+            this.CPU.ResetStrategy();
+            this.CPU.SetAISheep(new int[] { 2, 2, 3, 4, 5 });
         }
 
         public Strategy.Strategy.DIFFICULT GetDifficult()

@@ -78,7 +78,8 @@ namespace BattleSheep.GUI
 
         private void Back_Click(object sender, EventArgs e)
         {
-            this.Controller.BackToMenu(this);
+            Yakin sure = new Yakin((MainForm)this.parent);
+            sure.ShowDialog();
         }
 
         private void GeneratePlayerBoard()

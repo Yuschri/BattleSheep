@@ -47,6 +47,10 @@ namespace BattleSheep.Controller
                             {
                                 this.playerBoard.GetBButton()[j][i].Image = global::BattleSheep.Properties.Resources.sheep1;
                             }
+                        else
+                        {
+                            this.playerBoard.GetBButton()[j][i].Image = null;
+                        }
                         }
                         else
                         {
@@ -74,7 +78,7 @@ namespace BattleSheep.Controller
         internal void ResetGame()
         {
             this.playerBoard.GetRotateButton().Enabled = true;
-            this.playerBoard.GetResetButton().Enabled = false;
+            this.playerBoard.GetResetButton().Enabled = true;
             this.SheepCounter = 0;
         }
 

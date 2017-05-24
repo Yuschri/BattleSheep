@@ -446,7 +446,7 @@ namespace BattleSheep.Strategy
          */
         private void GenerateStrategy()
         {
-            int random = this.Rand.Next(1, 4);
+            int random = this.Rand.Next(1, 5);
             if (random == 1) {
                 FromTopAttackStrategy Strategy = new FromTopAttackStrategy(this.Board);
                 this.strategy = Strategy;
@@ -501,6 +501,14 @@ namespace BattleSheep.Strategy
             {
                 FromRightAttackStrategy CPU = (FromRightAttackStrategy)this.strategy;
                 CPU.SetAttack();
+            }
+        }
+
+        public void ResetStrategy()
+        {
+            if(this.Difficult == DIFFICULT.HARD)
+            {
+                this.GenerateStrategy();
             }
         }
 
