@@ -24,9 +24,11 @@ namespace BattleSheep.GUI
 
         private Button rotate = new Button();
 
-        private TableLayoutPanel PanelAtas = new TableLayoutPanel();
+        public TableLayoutPanel PanelAtas = new TableLayoutPanel();
 
         private Button back = new Button();
+
+        public Label status = new Label();
 
         /**
          * Player Board untuk player 2
@@ -54,9 +56,23 @@ namespace BattleSheep.GUI
             this.back.Margin = new Padding(12);
             this.back.FlatStyle = FlatStyle.Flat;
             this.back.Click += Back_Click;
+
             this.PanelAtas.BackColor = Color.Transparent;
             this.PanelAtas.Size = new Size(740, 50);
-            this.PanelAtas.Controls.Add(back);
+            this.PanelAtas.Controls.Add(back, 0, 0);
+            this.PanelAtas.RowCount = 1;
+            this.PanelAtas.ColumnCount = 2;
+
+            this.PanelAtas.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            this.PanelAtas.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            this.PanelAtas.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+
+            this.status.Text = "Taruh Domba";
+            this.status.Font = new Font("Calibri", 14);
+            this.status.Dock = DockStyle.Right;
+
+            this.PanelAtas.Controls.Add(status, 1, 0);
+
             this.Controls.Add(PanelAtas);
         }
 

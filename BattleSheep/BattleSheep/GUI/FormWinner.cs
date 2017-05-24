@@ -24,6 +24,7 @@ namespace BattleSheep.GUI
             this.gameboard.GetPlayerBoardController(Controller.GameBoardController.PLAYER.PLAYER1).RenderBoardGUI(true);
             this.gameboard.GetPlayerBoardController(Controller.GameBoardController.PLAYER.PLAYER2).RenderBoardGUI(false);
             this.gameboard.GetPlayerBoardController(Controller.GameBoardController.PLAYER.PLAYER1).ResetGame();
+            this.gameboard.status.Text = "Taruh Domba";
             this.Close();
         }
 

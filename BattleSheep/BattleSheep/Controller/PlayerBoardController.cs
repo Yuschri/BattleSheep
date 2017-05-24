@@ -65,7 +65,7 @@ namespace BattleSheep.Controller
                         }
                     else
                     {
-                        this.playerBoard.GetBButton()[j][i].BackColor = Color.FromArgb(255,255,255);
+                        this.playerBoard.GetBButton()[j][i].BackColor = Color.FromArgb(145, 239, 91);
                     }
                 }
                 }
@@ -116,14 +116,14 @@ namespace BattleSheep.Controller
                         {
                             for (int i = baris; i < baris + length; i++)
                             {
-                                this.playerBoard.GetBButton()[kolom][i].BackColor = Color.Transparent;//FromArgb(230, 230, 240)
+                                this.playerBoard.GetBButton()[kolom][i].BackColor = Color.FromArgb(145, 239, 91);//FromArgb(230, 230, 240)
                             }
                         }
                         else
                         {
                             for (int i = baris; i > baris - length; i--)
                             {
-                                this.playerBoard.GetBButton()[kolom][i].BackColor = Color.Transparent;//FromArgb(230, 230, 240)
+                                this.playerBoard.GetBButton()[kolom][i].BackColor = Color.FromArgb(145, 239, 91);//FromArgb(230, 230, 240)
                             }
                         }
                     }
@@ -133,14 +133,14 @@ namespace BattleSheep.Controller
                         {
                             for (int i = kolom; i < kolom + length; i++)
                             {
-                                this.playerBoard.GetBButton()[i][baris].BackColor = Color.Transparent;//FromArgb(230, 230, 240)
+                                this.playerBoard.GetBButton()[i][baris].BackColor = Color.FromArgb(145, 239, 91);//FromArgb(230, 230, 240)
                             }
                         }
                         else
                         {
                             for (int i = kolom; i > kolom - length; i--)
                             {
-                                this.playerBoard.GetBButton()[i][baris].BackColor = Color.Transparent;//FromArgb(230, 230, 240)
+                                this.playerBoard.GetBButton()[i][baris].BackColor = Color.FromArgb(145, 239, 91);//FromArgb(230, 230, 240)
                             }
                         }
                     }
@@ -391,6 +391,7 @@ namespace BattleSheep.Controller
             this.playerBoard.GetStartButton().Enabled = false;
             this.playerBoard.GetResetButton().Enabled = false;
             this.Controller.SetGameState(GameBoardController.STATE.PLAYING);
+            this.playerBoard.GetGameBoard().status.Text = "Bermain";
         }
 
         private void ParallelAttack(object source, EventArgs e)

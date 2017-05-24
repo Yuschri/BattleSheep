@@ -32,6 +32,8 @@ namespace BattleSheep.GUI
 
         private Label Nama = new Label();
 
+        private Label Diff = new Label();
+
         public PlayerBoard(GameBoardGUI gameboard,Player player)
         {
             this.Gameboard = gameboard;
@@ -61,7 +63,7 @@ namespace BattleSheep.GUI
                     K.FlatStyle = FlatStyle.Flat;
                     K.FlatAppearance.BorderSize = 1;
                     K.FlatAppearance.BorderColor = Color.FromArgb(75, 75, 75);
-                    K.BackColor = Color.Transparent;//FromArgb(230, 230, 240)
+                    K.BackColor = Color.FromArgb(145, 239, 91);//FromArgb(230, 230, 240)
                     K.TextAlign = ContentAlignment.MiddleCenter;
                     K.MouseEnter += K_MouseEnter;
                     K.MouseLeave += K_MouseLeave;
@@ -120,7 +122,26 @@ namespace BattleSheep.GUI
 
             this.Nama.Text = player.GetName();
             this.Nama.Font = new Font("Calibri", 14);
-            this.Dock = DockStyle.Bottom;
+            this.Nama.Dock = DockStyle.Bottom;
+
+            string diff;
+
+            if (Strategy.Strategy.DIFFICULT.EASY==this.Gameboard.GetController().GetDifficult())
+            {
+                diff = "Easy";
+            }
+            else if(Strategy.Strategy.DIFFICULT.MEDIUM == this.Gameboard.GetController().GetDifficult())
+            {
+                diff = "Medium";
+            }
+            else
+            {
+                diff = "Hard";
+            }
+
+            this.Diff.Text = diff;
+            this.Diff.Font = new Font("Calibri", 12);
+            this.Diff.Dock = DockStyle.Top;
 
             this.TopPanel.Dock = DockStyle.Fill;
             this.TopPanel.ColumnCount = 1;
@@ -152,9 +173,15 @@ namespace BattleSheep.GUI
                 this.TopPanelBawah.Controls.Add(this.StartButton);
                 this.TopPanel.Controls.Add(this.Nama, 0, 0);
             }
+            else
+            {
+                this.TopPanel.Controls.Add(this.Nama, 0, 0);
+                this.TopPanel.Controls.Add(this.Diff, 1, 0);
+            }
 
             this.Controls.Add(this.TopPanel);
             this.Controls.Add(this.SheepArena);
+            
         }
 
         private void K_MouseLeave(object sender, EventArgs e)

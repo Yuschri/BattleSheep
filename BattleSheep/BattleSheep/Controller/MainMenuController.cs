@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using BattleSheep.GUI;
 using System.Drawing;
+using System.Media;
 
 namespace BattleSheep.Controller
 {
@@ -21,6 +22,5 @@ namespace BattleSheep.Controller
             inputname = new InputNamaForm(this.parent);
             inputname.ShowDialog();
         }
-
     }
 }
