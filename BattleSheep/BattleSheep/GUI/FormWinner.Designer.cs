@@ -36,31 +36,34 @@
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(235)))), ((int)(((byte)(237)))));
             this.button1.Location = new System.Drawing.Point(76, 77);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(107, 42);
             this.button1.TabIndex = 0;
             this.button1.Text = "Ya, Main Lagi";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.PlayAgain);
             // 
             // button2
             // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(235)))), ((int)(((byte)(237)))));
             this.button2.Location = new System.Drawing.Point(189, 77);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(107, 42);
             this.button2.TabIndex = 1;
             this.button2.Text = "Kembali ke Menu";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.BackToMenu);
             // 
             // menang
             // 
             this.menang.AutoSize = true;
-            this.menang.Location = new System.Drawing.Point(166, 9);
+            this.menang.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
+            this.menang.Location = new System.Drawing.Point(114, 9);
             this.menang.Name = "menang";
-            this.menang.Size = new System.Drawing.Size(35, 13);
-            this.menang.TabIndex = 2;
+            this.menang.Size = new System.Drawing.Size(66, 24);
+            this.menang.TabIndex = 4;
             this.menang.Text = "label1";
             // 
             // tryagain
@@ -76,7 +79,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 143);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(173)))), ((int)(((byte)(211)))));
+            this.ClientSize = new System.Drawing.Size(377, 143);
             this.ControlBox = false;
             this.Controls.Add(this.tryagain);
             this.Controls.Add(this.menang);

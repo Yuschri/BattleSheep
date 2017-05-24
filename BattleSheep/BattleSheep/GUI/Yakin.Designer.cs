@@ -45,30 +45,37 @@
             // 
             // buttonYa
             // 
+            this.buttonYa.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(235)))), ((int)(((byte)(237)))));
+            this.buttonYa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonYa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.buttonYa.ForeColor = System.Drawing.Color.Black;
             this.buttonYa.Location = new System.Drawing.Point(45, 67);
             this.buttonYa.Name = "buttonYa";
             this.buttonYa.Size = new System.Drawing.Size(92, 30);
             this.buttonYa.TabIndex = 1;
             this.buttonYa.Text = "Ya";
-            this.buttonYa.UseVisualStyleBackColor = true;
+            this.buttonYa.UseVisualStyleBackColor = false;
             this.buttonYa.Click += new System.EventHandler(this.BackToMenu);
             // 
             // buttonTidak
             // 
+            this.buttonTidak.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(235)))), ((int)(((byte)(237)))));
+            this.buttonTidak.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonTidak.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.buttonTidak.ForeColor = System.Drawing.Color.Black;
             this.buttonTidak.Location = new System.Drawing.Point(161, 67);
             this.buttonTidak.Name = "buttonTidak";
             this.buttonTidak.Size = new System.Drawing.Size(92, 30);
             this.buttonTidak.TabIndex = 2;
             this.buttonTidak.Text = "Tidak";
-            this.buttonTidak.UseVisualStyleBackColor = true;
+            this.buttonTidak.UseVisualStyleBackColor = false;
             this.buttonTidak.Click += new System.EventHandler(this.KeepPlay);
             // 
             // Yakin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(173)))), ((int)(((byte)(211)))));
             this.ClientSize = new System.Drawing.Size(313, 127);
             this.Controls.Add(this.buttonTidak);
             this.Controls.Add(this.buttonYa);
